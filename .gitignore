@@ -1,0 +1,16 @@
+.env
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Runtime data and model weights live outside the repo (DATA_ROOT), but guard anyway
+results/
+qdrant_data/
+model_weights/
+temp_cache/
+manifest.db
+*.npz
+
+node_modules/
+.DS_Store
