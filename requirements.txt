@@ -1,0 +1,38 @@
+# Verified against conda env `jina_env` on 2026-10-04.
+#
+# Upper bound on transformers is load-bearing: jina-clip-v2 ships remote code
+# that breaks on 5.x. SigLIP2 needs >=4.49 and Qwen2.5-VL needs >=4.49, so one
+# version in this range serves all three models.
+transformers>=4.55,<5
+
+# torch is installed per-environment (the CUDA build must match the driver).
+qdrant-client
+elasticsearch>=8,<9      # server is 8.x; the 9.x client changes the media-type header
+fastapi
+uvicorn
+python-multipart
+
+pandas
+pyarrow                  # reads test.parquet
+numpy
+Pillow
+scipy                    # DCT for the perceptual hash in offline/phash.py
+python-dotenv
+
+accelerate               # unpinned: AIC's ==1.9.0 pin existed for BEiT-3, which is dropped
+sentencepiece
+einops
+faster-whisper           # decodes audio via PyAV; no librosa needed
+
+google-genai>=1,<2       # Gemini OCR
+openai                   # DeepSeek speaks the OpenAI protocol
+
+# Deliberately absent, because pypi.org and conda.anaconda.org are unreachable
+# from this network and each had a better local substitute:
+#
+#   opencv-python   -> ffmpeg CLI. The videos are HEVC/H.265, which cv2 often
+#                      cannot decode without a custom build; ffmpeg 6.1.1 is
+#                      already installed and handles it.
+#   librosa         -> faster-whisper decodes audio itself through PyAV.
+#   imagehash       -> offline/phash.py, ~15 lines over numpy + scipy DCT.
+#   qwen-vl-utils   -> transformers AutoProcessor accepts PIL images directly.
