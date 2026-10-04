@@ -212,14 +212,41 @@ Collection `videomme_keyframes`, named vectors khớp code AIC có sẵn:
 | `siglip` | 1152 | cosine |
 | `jina` | 1024 | cosine |
 
-Point id: UUID5 tất định từ `f"{video_id}:{shot_idx}:{frame_idx}"` — chạy lại `index`
-không tạo bản trùng.
+Point id: UUID5 tất định từ `f"{video_name}:{shot_number}:{frame_index}"` — chạy lại
+`index` không tạo bản trùng.
 
-Payload: `video_id`, `shot_idx`, `frame_idx`, `timestamp`, `shot_start`, `shot_end`,
-`file_path` (tương đối so với `DATA_ROOT`).
+Payload **giữ đúng schema lồng nhau của repo AIC**, không phẳng hoá. Đây là ràng buộc
+cứng: `fusion.py`, `parsing.py` và frontend đều đọc theo các khoá này.
 
-**Payload index trên `video_id` (keyword) là bắt buộc** — chế độ eval chính là in-video,
-cần filter theo video_id mỗi query.
+```python
+{
+  "file_path": str,                  # khoá fuse của rrf_weighted_fuse
+  "filename": str,
+  "source_type": "video_keyframe",
+  "shot_id": f"{video_name}_shot_{shot_number:03d}",   # khoá group theo shot
+  "video": {"name": "001", "filename": "001.mp4"},
+  "shot":  {"number": int, "position": int, "start": float, "end": float},
+  "frame": {"index": int, "timestamp_seconds": float, "timestamp_formatted": str},
+}
+```
+
+`video.name` là `"001"`.. `"800"` (tên file Video-MME-v2), không phải định dạng AIC.
+
+`setup_collection()` đã tự tạo payload index cho `frame.timestamp_seconds` và `video.name`
+— không cần thêm gì cho chế độ in-video.
+
+### 6.2a Ba chỗ phải sửa khi port, nếu không sẽ vỡ ngầm
+
+Phát hiện khi đọc code nguồn, không phải suy đoán:
+
+1. **`parsing.py` có `_VIDEO_NAME_RE = r"^[A-Z]\d+_V\d+$"`** — chỉ nhận tên kiểu
+   `L01_V001`. Với `"001"` thì `metadata_needs_repair()` **luôn trả True**. Phải mở rộng
+   regex để nhận thêm `^\d{3}$`.
+2. **Không port `enrich_results_metadata`** — nó chỉ tồn tại để hydrate collection
+   caption, mà ta đã bỏ. Giữ lại là tự gọi `repair_result_metadata` lên mọi kết quả.
+3. **`rrf_weighted_fuse` nhận object có `.score` và `.payload`** (ScoredPoint của Qdrant),
+   nhưng `ElasticsearchService.search` trả **dict**. Cần adapter bọc kết quả ES trước khi
+   fuse — xem §6.3.
 
 ### 6.2 Elasticsearch — doc là **segment** / **keyframe**
 
@@ -232,11 +259,25 @@ cần filter theo video_id mỗi query.
 Dùng `english` analyzer (có stemming + stopword) vì dataset là tiếng Anh — khác AIC gốc
 vốn xử lý tiếng Việt.
 
-### 6.3 Đơn vị fusion là **shot**
+### 6.3 Fusion: keyframe trước, rồi gộp lên shot
 
-Qdrant trả keyframe, ES trả segment — nhưng RRF gộp ở cấp shot: điểm của shot = điểm cao
-nhất trong các keyframe/segment thuộc nó. Lý do: ảnh cần độ chính xác thời điểm nên index
-theo keyframe, còn text cần ngữ cảnh rộng hơn một frame mới đủ nghĩa.
+`rrf_weighted_fuse` có sẵn khoá theo `payload["file_path"]`, tức fuse ở cấp **keyframe**.
+Giữ nguyên hàm đó (đã được dùng thật trong AIC) rồi **gộp lên shot ở bước sau** bằng
+`payload["shot_id"]`, lấy điểm cao nhất mỗi shot. Hai bước, không viết lại fusion.
+
+ES trả dict nên cần adapter cho đồng dạng với ScoredPoint:
+
+```python
+@dataclass
+class _FusableHit:
+    score: float
+    payload: dict
+    id: str | None = None
+```
+
+Mỗi hit ASR được map sang các keyframe có `frame.timestamp_seconds` nằm trong
+`[start, end]` của segment; mỗi hit OCR map trực tiếp sang keyframe của nó. Nhờ vậy cả 4
+nguồn vào `rrf_weighted_fuse` cùng một dạng.
 
 ## 7. Luồng online
 
