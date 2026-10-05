@@ -16,6 +16,7 @@ REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DATA_ROOT=/media/nekoartisan/Lexar/vqa-data
 FETCHER="$REPO/scripts/fetch_videomme2.sh"
 TARGET_ZIPS="${TARGET_ZIPS:-10}"
+CONDA_ENV="${CONDA_ENV:-jina_env}"
 
 LOG="$DATA_ROOT/watcher.log"
 LOCK="$DATA_ROOT/watcher.lock"
@@ -70,7 +71,11 @@ while :; do
       (
         cd "$REPO" || exit 1
         set -a; [ -f .env ] && . ./.env; set +a
-        python -m offline.run --stages all >> "$DATA_ROOT/index.log" 2>&1
+        # Must be the conda env: av, torch and transformers<5 are only there.
+        # Calling plain `python` picked up the system interpreter and failed
+        # every video with ModuleNotFoundError: No module named 'av'.
+        conda run --no-capture-output -n "$CONDA_ENV" \
+          python -m offline.run --stages all >> "$DATA_ROOT/index.log" 2>&1
       )
       rc=$?
       indexed_n=$(videos_indexed)
