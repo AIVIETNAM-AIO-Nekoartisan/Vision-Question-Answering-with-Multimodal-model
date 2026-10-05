@@ -45,14 +45,35 @@ weight_bytes() {
     | awk '{s+=$1} END {print s+0}'
 }
 
+# Byte count alone is not "loadable". An earlier run crossed the 7GB threshold
+# while model.safetensors.index.json was still downloading, so transformers
+# reported "no file named model.safetensors found in directory" and the smoke
+# test failed thirteen minutes before the download actually finished. This checks
+# that the index exists and every shard it names is present.
+weights_ready() {
+  local idx="$QWEN_DIR/model.safetensors.index.json"
+  [ -f "$idx" ] || return 1
+  python3 - "$QWEN_DIR" <<'PY' || return 1
+import json, sys
+from pathlib import Path
+d = Path(sys.argv[1])
+try:
+    wm = json.loads((d / "model.safetensors.index.json").read_text())["weight_map"]
+except Exception:
+    sys.exit(1)
+sys.exit(0 if all((d / s).is_file() for s in set(wm.values())) else 1)
+PY
+  [ "$(weight_bytes)" -ge "$NEEDED" ]
+}
+
 # --------------------------------------------------------------------------- #
 log "=== full pipeline start ==="
 
 log "waiting for Qwen weights"
-while [ "$(weight_bytes)" -lt "$NEEDED" ]; do
+while ! weights_ready; do
   sleep 120
 done
-log "weights complete ($(( $(weight_bytes) /1024/1024))MB)"
+log "weights ready ($(( $(weight_bytes) /1024/1024))MB, index and all shards present)"
 
 # --- smoke test: one question, before committing hours to a broken setup ---
 log "smoke test: answering question 001-1"
