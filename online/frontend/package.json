@@ -1,0 +1,17 @@
+{
+  "name": "vqa-videomme-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Proxy and single-page UI for VQA on Video-MME-v2",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

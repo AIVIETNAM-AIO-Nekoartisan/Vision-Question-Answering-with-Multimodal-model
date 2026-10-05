@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VQA · Video-MME-v2</title>
+<style>
+  :root {
+    --bg: #11131a; --panel: #1a1d27; --line: #2b3040;
+    --text: #e6e8ef; --dim: #9aa1b4; --accent: #6ea8fe; --good: #4ec9a0; --bad: #e4697f;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 14px/1.5 ui-sans-serif, system-ui, -apple-system, sans-serif;
+  }
+  header {
+    padding: 14px 20px; border-bottom: 1px solid var(--line);
+    display: flex; align-items: baseline; gap: 14px;
+  }
+  h1 { font-size: 15px; margin: 0; font-weight: 600; }
+  #health { color: var(--dim); font-size: 12px; }
+  main { display: grid; grid-template-columns: 380px 1fr; gap: 0; height: calc(100vh - 51px); }
+  #controls { padding: 18px; border-right: 1px solid var(--line); overflow-y: auto; }
+  #results { padding: 18px; overflow-y: auto; }
+  label { display: block; font-size: 12px; color: var(--dim); margin: 14px 0 5px; }
+  input, textarea, select, button {
+    width: 100%; background: var(--panel); color: var(--text);
+    border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px;
+    font: inherit;
+  }
+  textarea { resize: vertical; min-height: 68px; }
+  button {
+    background: var(--accent); color: #0b1020; border: 0; font-weight: 600;
+    cursor: pointer; margin-top: 16px; padding: 10px;
+  }
+  button:disabled { opacity: .5; cursor: progress; }
+  button.secondary { background: var(--panel); color: var(--text); border: 1px solid var(--line); }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .card img { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; background: #000; cursor: pointer; }
+  .meta { padding: 8px 10px; font-size: 12px; }
+  .meta .t { color: var(--accent); font-variant-numeric: tabular-nums; }
+  .meta .s { color: var(--dim); }
+  .snip { color: var(--dim); font-size: 11px; margin-top: 4px; max-height: 42px; overflow: hidden; }
+  #answer { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px; margin-bottom: 18px; }
+  #answer.hidden { display: none; }
+  .letter { font-size: 26px; font-weight: 700; }
+  .ok { color: var(--good); } .no { color: var(--bad); }
+  .tag { display: inline-block; font-size: 11px; color: var(--dim); border: 1px solid var(--line); border-radius: 99px; padding: 1px 8px; margin-right: 5px; }
+  .empty { color: var(--dim); padding: 30px 0; }
+</style>
+</head>
+<body>
+<header>
+  <h1>VQA · Video-MME-v2</h1>
+  <span id="health">checking…</span>
+</header>
+
+<main>
+  <section id="controls">
+    <label for="qid">Question id (from test.parquet)</label>
+    <input id="qid" placeholder="001-1" value="001-1">
+    <button id="ask">Answer this question</button>
+
+    <label for="query">…or search shots by text</label>
+    <textarea id="query" placeholder="a person opening a door"></textarea>
+    <label for="video">Restrict to video (blank = whole corpus)</label>
+    <input id="video" placeholder="001">
+    <div class="row">
+      <div><label for="topk">top_k</label><input id="topk" type="number" value="10" min="1" max="40"></div>
+      <div><label for="source">Source</label>
+        <select id="source">
+          <option value="kis">fused (RRF)</option>
+          <option value="audio">speech only</option>
+          <option value="ocr">on-screen text only</option>
+        </select>
+      </div>
+    </div>
+    <button id="search" class="secondary">Search</button>
+  </section>
+
+  <section id="results">
+    <div id="answer" class="hidden"></div>
+    <div id="grid" class="grid"></div>
+    <div id="empty" class="empty">Ask a question or run a search.</div>
+  </section>
+</main>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const mmss = (s) => {
+  if (s == null) return "--:--";
+  const n = Math.floor(s);
+  return `${String(Math.floor(n / 60)).padStart(2, "0")}:${String(n % 60).padStart(2, "0")}`;
+};
+
+async function api(path, body) {
+  const res = await fetch(`/api${path}`, {
+    method: body ? "POST" : "GET",
+    headers: { "Content-Type": "application/json" },
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.detail || data.error || res.statusText);
+  return data;
+}
+
+async function refreshHealth() {
+  try {
+    const h = await api("/health");
+    const pts = h.qdrant?.points ?? 0;
+    const asr = h.elasticsearch?.asr?.docs ?? 0;
+    const ocr = h.elasticsearch?.ocr?.docs ?? 0;
+    const ready = Object.entries(h.models || {})
+      .filter(([, v]) => v === "ready").map(([k]) => k).join(" ");
+    $("health").textContent =
+      `${h.videos_on_disk} videos · ${pts.toLocaleString()} keyframes · ${asr.toLocaleString()} asr · ${ocr.toLocaleString()} ocr · ${ready || "no models"}`;
+  } catch (err) {
+    $("health").textContent = `backend unreachable (${err.message})`;
+  }
+}
+
+function renderShots(shots) {
+  $("empty").style.display = shots.length ? "none" : "block";
+  if (!shots.length) $("empty").textContent = "No shots matched.";
+  $("grid").innerHTML = shots.map((s) => {
+    const p = s.payload || {};
+    const video = p.video?.name ?? "?";
+    const shotStart = p.shot?.start ?? s.timestamp;
+    const shotEnd = p.shot?.end ?? (s.timestamp != null ? s.timestamp + 2 : null);
+    const gif = shotEnd != null
+      ? `/gif?video_id=${video}&start=${shotStart}&end=${shotEnd}`
+      : null;
+    return `
+      <div class="card">
+        <img src="/files?p=${encodeURIComponent(s.file_path)}"
+             ${gif ? `data-gif="${gif}" data-still="/files?p=${encodeURIComponent(s.file_path)}"` : ""}
+             loading="lazy" alt="${s.shot_id}">
+        <div class="meta">
+          <span class="t">${mmss(s.timestamp)}</span>
+          <span class="s">· ${s.shot_id}</span>
+          <div class="snip">score ${s.score.toFixed(4)}
+            ${(s.rrf_components || []).map((c) => `<span class="tag">${c}</span>`).join("")}
+          </div>
+        </div>
+      </div>`;
+  }).join("");
+
+  // Swap in the GIF on click: built lazily by the backend, so only the shots
+  // someone actually looks at get rendered.
+  $("grid").querySelectorAll("img[data-gif]").forEach((img) => {
+    img.addEventListener("click", () => {
+      const showing = img.dataset.showing === "gif";
+      img.src = showing ? img.dataset.still : img.dataset.gif;
+      img.dataset.showing = showing ? "still" : "gif";
+    });
+  });
+}
+
+$("search").addEventListener("click", async () => {
+  const btn = $("search");
+  btn.disabled = true;
+  $("answer").classList.add("hidden");
+  $("empty").textContent = "Searching…";
+  $("empty").style.display = "block";
+  try {
+    const out = await api(`/search/${$("source").value}`, {
+      query: $("query").value.trim(),
+      video_id: $("video").value.trim() || null,
+      top_k: parseInt($("topk").value, 10),
+    });
+    renderShots(out.results || []);
+  } catch (err) {
+    $("empty").textContent = `Search failed: ${err.message}`;
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+$("ask").addEventListener("click", async () => {
+  const btn = $("ask");
+  btn.disabled = true;
+  $("empty").textContent = "Thinking… (the VLM reads ~18 images)";
+  $("empty").style.display = "block";
+  $("grid").innerHTML = "";
+  try {
+    const out = await api("/vqa/answer", {
+      question_id: $("qid").value.trim(),
+      top_k: parseInt($("topk").value, 10),
+    });
+    const cls = out.correct === true ? "ok" : out.correct === false ? "no" : "";
+    $("answer").innerHTML = `
+      <div><span class="letter ${cls}">${out.answer ?? "?"}</span>
+        ${out.gold ? `<span class="s">gold ${out.gold}</span>` : ""}
+        ${out.unparsed ? `<span class="tag">unparsed</span>` : ""}
+      </div>
+      <div class="snip">video ${out.video_id} · ${out.shot_ids.length} shots as evidence</div>
+      <div class="snip">raw: ${(out.raw || "").replace(/</g, "&lt;")}</div>`;
+    $("answer").classList.remove("hidden");
+
+    if (out.shot_ids.length) {
+      const shots = await api("/search/kis", {
+        query: $("query").value.trim() || "evidence",
+        video_id: out.video_id,
+        top_k: parseInt($("topk").value, 10),
+      });
+      renderShots(shots.results || []);
+    } else {
+      $("empty").textContent = "No retrieved shots (baseline mode).";
+    }
+  } catch (err) {
+    $("empty").textContent = `Failed: ${err.message}`;
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+refreshHealth();
+setInterval(refreshHealth, 30000);
+</script>
+</body>
+</html>
