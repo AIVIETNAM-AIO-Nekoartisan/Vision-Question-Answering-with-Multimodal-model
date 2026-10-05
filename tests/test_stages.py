@@ -115,9 +115,26 @@ class TestSelectKeyframePositions(unittest.TestCase):
         pos = select_keyframe_positions(start=0.0, end=4.0, fps=25.0)
         self.assertEqual(len(pos), 3)
 
-    def test_long_shot_capped_at_five(self):
+    def test_long_shot_samples_every_three_seconds(self):
         pos = select_keyframe_positions(start=0.0, end=60.0, fps=25.0)
-        self.assertEqual(len(pos), 5)
+        self.assertEqual(len(pos), 20)
+
+    def test_very_long_shot_is_capped_but_still_well_covered(self):
+        """A 325s single shot really happens: videos 005 and 008 peak at 0.497
+        transition probability, so TransNetV2 reports one shot for the lot."""
+        pos = select_keyframe_positions(start=0.0, end=325.0, fps=30.0)
+        self.assertLessEqual(len(pos), 40)
+        self.assertGreaterEqual(len(pos), 30)
+
+    def test_coverage_gap_stays_bounded_on_long_shots(self):
+        """No stretch of a long shot may go unsampled for too long."""
+        fps = 30.0
+        for duration in (60.0, 180.0, 325.0, 600.0):
+            pos = select_keyframe_positions(0.0, duration, fps)
+            gaps = [(b - a) / fps for a, b in zip(pos, pos[1:])]
+            self.assertLess(
+                max(gaps), 20.0, f"{duration}s shot has a {max(gaps):.0f}s gap"
+            )
 
     def test_positions_inside_shot_and_sorted(self):
         pos = select_keyframe_positions(start=10.0, end=30.0, fps=25.0)

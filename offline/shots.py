@@ -65,12 +65,22 @@ def predictions_to_shots(
     return shots
 
 
-def select_keyframe_positions(
-    start: float, end: float, fps: float
-) -> list[int]:
-    """Frame indices to sample for one shot, per spec section 5.1.
+LONG_SHOT_SECONDS = 10.0
+LONG_SHOT_STEP = 3.0
+MAX_GAP_SECONDS = 8.0
+MAX_FRAMES_PER_SHOT = 40
 
-    Under 1s: one frame. Over 10s: every 3s, capped at 5. Otherwise 10/50/90%.
+
+def select_keyframe_positions(start: float, end: float, fps: float) -> list[int]:
+    """Frame indices to sample for one shot.
+
+    Under 1s: one frame. Over 10s: every 3s. Otherwise 10/50/90%.
+
+    The per-shot cap is 40, not 5. TransNetV2 legitimately reports a single shot
+    for slow-paced videos — 005 and 008 peak at 0.497 transition probability
+    across their whole length — and a cap of 5 turned a 325-second shot into one
+    keyframe per 65 seconds. The cap now only binds past ~2 minutes, and
+    MAX_GAP_SECONDS keeps coverage bounded beyond that.
     """
     duration = max(0.0, end - start)
     start_f = int(round(start * fps))
@@ -78,9 +88,9 @@ def select_keyframe_positions(
 
     if duration < 1.0:
         fracs = [0.5]
-    elif duration > 10.0:
-        step = 3.0
-        count = min(5, max(1, int(duration // step)))
+    elif duration > LONG_SHOT_SECONDS:
+        step = max(LONG_SHOT_STEP, duration / MAX_FRAMES_PER_SHOT)
+        count = max(1, min(MAX_FRAMES_PER_SHOT, int(duration // step)))
         fracs = [min(0.98, (i * step) / duration) for i in range(count)]
     else:
         fracs = [0.1, 0.5, 0.9]
