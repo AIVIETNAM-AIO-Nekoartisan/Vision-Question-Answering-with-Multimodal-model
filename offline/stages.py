@@ -127,8 +127,26 @@ class Ctx:
     def embeds_npz(self, vid: str) -> Path:
         return self.data_root / "embeds" / f"{vid}.npz"
 
+    @property
+    def asr_dir_name(self) -> str:
+        """Artifacts are kept per source so both can exist at once.
+
+        Sharing one path would make the +asr-gt vs +asr-whisper comparison
+        meaningless: the Elasticsearch _id derives from file_path, so whisper
+        segment i would overwrite subtitle segment i, and because the two sources
+        produce different segment counts the index would end up a mix of both
+        with neither intact.
+        """
+        return "asr" if self.asr_source == "subtitle" else f"asr_{self.asr_source}"
+
+    @property
+    def es_asr_index_for_source(self) -> str:
+        if self.asr_source == "subtitle":
+            return self.es_asr_index
+        return f"{self.es_asr_index}_{self.asr_source}"
+
     def asr_json(self, vid: str) -> Path:
-        return self.data_root / "asr" / f"{vid}.json"
+        return self.data_root / self.asr_dir_name / f"{vid}.json"
 
     def ocr_json(self, vid: str) -> Path:
         return self.data_root / "ocr" / f"{vid}.json"
@@ -406,20 +424,23 @@ def stage_index(video_id: str, ctx: Ctx) -> None:
         # The field must be named `content`: ElasticsearchService.search queries
         # content, content.ngram and content.exact. A `text` field would index
         # fine and never match anything.
+        source = blob.get("source", ctx.asr_source)
         docs = [
             {
-                "file_path": f"asr/{video_id}/{i}",
+                # The source is part of the path, so the derived _id cannot
+                # collide across sources even inside one index.
+                "file_path": f"{ctx.asr_dir_name}/{video_id}/{i}",
                 "video_id": video_id,
                 "content": s["text"],
                 "start": s["start"],
                 "end": s["end"],
-                "source": blob.get("source", ctx.asr_source),
+                "source": source,
             }
             for i, s in enumerate(blob.get("segments", []))
             if s.get("text", "").strip()
         ]
         if docs:
-            ctx.es(ctx.es_asr_index).upsert_documents(docs)
+            ctx.es(ctx.es_asr_index_for_source).upsert_documents(docs)
 
     ocr_path = ctx.ocr_json(video_id)
     if ocr_path.exists():

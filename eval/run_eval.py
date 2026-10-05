@@ -182,6 +182,15 @@ def main(argv=None) -> int:
     )
     cfg = get_config(args.config)
 
+    # Apply the config's ASR source to the environment BEFORE resources are
+    # built: AppResources picks its Elasticsearch index from ASR_SOURCE, and
+    # subtitle and whisper segments live in separate indices. Without this,
+    # +asr-whisper would silently read the subtitle corpus and report the same
+    # number as +asr-gt.
+    if cfg.get("asr_source"):
+        os.environ["ASR_SOURCE"] = cfg["asr_source"]
+        logger.info("ASR_SOURCE=%s", cfg["asr_source"])
+
     from online.backend.resources import resources
 
     resources.initialize_datastores()

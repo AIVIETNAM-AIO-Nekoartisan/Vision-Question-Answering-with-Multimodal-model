@@ -76,15 +76,23 @@ class AppResources:
             self.qdrant = None
             self._mark("qdrant", False, exc)
 
-        for attr, env_key, default in (
-            ("es_asr", "ES_ASR_INDEX", "asr_data"),
-            ("es_ocr", "ES_OCR_INDEX", "ocr_data"),
+        # ASR_SOURCE selects which index to read: subtitle and whisper segments
+        # live in separate indices so both stay intact and the +asr-gt vs
+        # +asr-whisper comparison is between two clean corpora.
+        asr_source = os.getenv("ASR_SOURCE", "subtitle")
+        asr_index = os.getenv("ES_ASR_INDEX", "asr_data")
+        if asr_source != "subtitle":
+            asr_index = f"{asr_index}_{asr_source}"
+
+        for attr, index_name in (
+            ("es_asr", asr_index),
+            ("es_ocr", os.getenv("ES_OCR_INDEX", "ocr_data")),
         ):
             try:
                 svc = ElasticsearchService(
                     host=os.getenv("ES_HOST", "localhost"),
                     port=int(os.getenv("ES_PORT", "9200")),
-                    index_name=os.getenv(env_key, default),
+                    index_name=index_name,
                 )
                 svc.setup_index()
                 setattr(self, attr, svc)

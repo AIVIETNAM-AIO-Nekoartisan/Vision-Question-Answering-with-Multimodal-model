@@ -197,3 +197,41 @@ class TestPhash(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestAsrSourceSeparation(unittest.TestCase):
+    """Subtitle and Whisper artifacts must not share paths or ES ids.
+
+    The Elasticsearch _id derives from file_path, so a shared path would let
+    whisper segment i overwrite subtitle segment i. The two sources produce
+    different segment counts, so the index would end up a mix of both.
+    """
+
+    def _ctx(self, source):
+        from pathlib import Path
+        from offline.stages import Ctx
+        return Ctx(
+            data_root=Path("/tmp/x"),
+            videos_dir=Path("/tmp/x/videos"),
+            annotations_dir=Path("/tmp/x/ann"),
+            transnet_weights=Path("/tmp/x/w.pth"),
+            asr_source=source,
+        )
+
+    def test_subtitle_keeps_the_plain_paths(self):
+        c = self._ctx("subtitle")
+        self.assertEqual(c.asr_dir_name, "asr")
+        self.assertEqual(c.es_asr_index_for_source, "asr_data")
+        self.assertTrue(str(c.asr_json("001")).endswith("asr/001.json"))
+
+    def test_whisper_gets_its_own_dir_and_index(self):
+        c = self._ctx("whisper")
+        self.assertEqual(c.asr_dir_name, "asr_whisper")
+        self.assertEqual(c.es_asr_index_for_source, "asr_data_whisper")
+        self.assertTrue(str(c.asr_json("001")).endswith("asr_whisper/001.json"))
+
+    def test_the_two_sources_never_collide(self):
+        a, b = self._ctx("subtitle"), self._ctx("whisper")
+        self.assertNotEqual(a.asr_json("001"), b.asr_json("001"))
+        self.assertNotEqual(a.es_asr_index_for_source, b.es_asr_index_for_source)
+        self.assertNotEqual(a.asr_dir_name, b.asr_dir_name)
