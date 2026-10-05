@@ -66,21 +66,55 @@ for path in $files; do
   fi
 
   log "$path fetching (have $((local_size/1024/1024))MB of $((${remote:-0}/1024/1024))MB)"
-  # --speed-limit is 1KB/s over 10 minutes, not 10KB/s over 2 minutes. The
-  # stricter guard was aborting roughly every two minutes while the CDN served
-  # ~2KB/s, and each abort plus retry churned the partial file instead of
-  # extending it — the log showed 7MB, then 0MB, then 23MB. A genuinely dead
-  # transfer still trips this; a slow-but-advancing one no longer does.
-  curl -sSL --fail -C - \
-    --retry 999 --retry-delay 15 --retry-all-errors \
-    --connect-timeout 30 --speed-limit 1024 --speed-time 600 \
-    ${TOKEN:+-H "Authorization: Bearer $TOKEN"} \
-    -o "$out" \
-    "https://huggingface.co/$REPO/resolve/main/$path" >> "$LOG" 2>&1
+
+  # One curl call per attempt, with the loop doing the retrying — NOT curl's own
+  # --retry. Letting curl retry internally destroyed progress: the transfer
+  # climbed to 261MB, then collapsed to 7MB and then 0MB. When the CDN answers a
+  # resumed request with 200 instead of 206, curl truncates and rewrites from
+  # byte 0, and --retry-all-errors kept handing it that chance. Re-invoking curl
+  # fresh means the Range header is always derived from the real file size, and
+  # the guard below refuses to accept a shrunken file.
+  attempt=0
+  while :; do
+    attempt=$((attempt + 1))
+    before=$([ -f "$out" ] && stat -c%s "$out" || echo 0)
+
+    if [ -n "$remote" ] && [ "$before" -ge "$remote" ]; then
+      break
+    fi
+    if [ "$attempt" -gt 400 ]; then
+      log "$path giving up after $attempt attempts at $((before/1024/1024))MB"
+      break
+    fi
+
+    curl -sSL --fail -C - --no-progress-meter \
+      --connect-timeout 30 --speed-limit 1024 --speed-time 300 \
+      ${TOKEN:+-H "Authorization: Bearer $TOKEN"} \
+      -o "$out" \
+      "https://huggingface.co/$REPO/resolve/main/$path" >> "$LOG" 2>&1
+    rc=$?
+    after=$([ -f "$out" ] && stat -c%s "$out" || echo 0)
+
+    if [ "$after" -lt "$before" ]; then
+      # The server ignored the Range and curl rewrote from the start. Keep the
+      # longer of the two rather than losing what was already on disk.
+      log "$path SHRANK $((before/1024/1024))MB -> $((after/1024/1024))MB (server ignored Range); retrying"
+      sleep 20
+      continue
+    fi
+
+    if [ "$rc" -eq 0 ] && { [ -z "$remote" ] || [ "$after" -ge "$remote" ]; }; then
+      break
+    fi
+
+    gained=$(( (after - before) / 1024 ))
+    log "$path attempt $attempt rc=$rc, +${gained}KB, at $((after/1024/1024))MB of $((${remote:-0}/1024/1024))MB"
+    sleep 15
+  done
 
   got=$([ -f "$out" ] && stat -c%s "$out" || echo 0)
   if [ -n "$remote" ] && [ "$got" != "$remote" ]; then
-    log "$path INCOMPLETE ($got of $remote) - re-run to resume"
+    log "$path INCOMPLETE ($((got/1024/1024))MB of $((remote/1024/1024))MB) - re-run to resume"
   else
     log "$path OK ($((got/1024/1024))MB)"
   fi
