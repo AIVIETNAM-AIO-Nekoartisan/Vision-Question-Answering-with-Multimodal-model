@@ -316,21 +316,17 @@ def stage_asr(video_id: str, ctx: Ctx) -> None:
             ctx.annotations_dir / "subtitle.zip", video_id
         )
     elif ctx.asr_source == "whisper":
-        from core.models.Whisper_VAD import WhisperTranscription
+        # core/models/whisper_fast.py, not AIC's Whisper_VAD.py: that module
+        # imports librosa (uninstallable here) and pulls openai/whisper-large-v3
+        # through transformers (~3GB, uncached), while the CTranslate2 build is
+        # already on disk.
+        from core.models.whisper_fast import FastWhisper
 
         if "whisper" not in ctx._cache:
-            ctx._cache["whisper"] = WhisperTranscription()
-        raw = ctx._cache["whisper"].transcribe_file_with_sliding_window(
-            str(ctx.video(video_id))
-        )
-        segments = [
-            Segment(
-                text=s.get("text", ""),
-                start=float(s.get("start", 0.0)),
-                end=float(s.get("end", 0.0)),
-            )
-            for s in (raw or [])
-        ]
+            model = FastWhisper(language=os.getenv("WHISPER_LANGUAGE", "en"))
+            model.load()
+            ctx._cache["whisper"] = model
+        segments = ctx._cache["whisper"].transcribe(ctx.video(video_id))
     else:
         raise ValueError(f"unknown ASR_SOURCE: {ctx.asr_source}")
 
