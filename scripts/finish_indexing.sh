@@ -33,17 +33,25 @@ indexed=$(sqlite3 "$DATA_ROOT/manifest.db" \
   2>/dev/null || echo 0)
 log "embed+index finished rc=$rc, $indexed video(s) indexed"
 
-# The eval needs the VLM, which may still be downloading. Report rather than
-# guess: the scheduled task picks this up on its next pass.
-if [ -d /mnt/data/vqa-hf/hub/models--Qwen--Qwen2.5-VL-3B-Instruct ] \
-   && [ -z "$(find /mnt/data/vqa-hf/hub/models--Qwen--Qwen2.5-VL-3B-Instruct -name '*.incomplete' 2>/dev/null)" ]; then
-  log "Qwen present; running dev-split eval for baseline-uniform and visual-only"
+# The eval needs the VLM. Check for the actual weight files and their total
+# size: an earlier version tested only that the directory existed, which passed
+# on a 12MB config-and-tokenizer-only download and burned three hours in failed
+# fetch attempts before reporting "VLM unavailable".
+QWEN_DIR="${QWEN_VL_MODEL:-/mnt/data/vqa-models/qwen2.5-vl-3b}"
+qwen_bytes=0
+if [ -d "$QWEN_DIR" ]; then
+  qwen_bytes=$(find "$QWEN_DIR" -name '*.safetensors' -printf '%s\n' 2>/dev/null \
+    | awk '{s+=$1} END {print s+0}')
+fi
+# fp16 3B is ~7.3GB across two shards; require 7GB before trusting it.
+if [ "$qwen_bytes" -gt 7000000000 ]; then
+  log "Qwen weights present ($((qwen_bytes/1024/1024))MB); running dev-split eval"
   for cfg in baseline-uniform visual-only; do
     conda run --no-capture-output -n "$CONDA_ENV" \
       python -m eval.run_eval --config "$cfg" --split dev >> "$DATA_ROOT/eval.log" 2>&1
     log "eval $cfg done"
   done
 else
-  log "Qwen not fully downloaded; skipping eval"
+  log "Qwen weights incomplete ($((qwen_bytes/1024/1024))MB of ~7300MB); skipping eval"
 fi
 log "=== finisher done ==="
