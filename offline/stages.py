@@ -141,15 +141,31 @@ class Ctx:
             self._cache["shots"] = det
         return self._cache["shots"]
 
-    def embedders(self):
-        if "embed" not in self._cache:
-            from core.models.JinaCLIP_embedding import MultimodalEmbeddingJinaCLIP
-            from core.models.SigLIP_embedding import MultimodalEmbeddingSigLIP
+    def embedders(self) -> dict:
+        """Whichever visual embedders actually load, keyed by vector name.
 
-            self._cache["embed"] = (
-                MultimodalEmbeddingSigLIP(fp16=True),
-                MultimodalEmbeddingJinaCLIP(fp16=True),
-            )
+        Returning a partial set on purpose: the weights arrive over a link that
+        drops, and because artifacts are written per-stage, re-running `embed`
+        later to add a second vector costs nothing upstream.
+        """
+        if "embed" not in self._cache:
+            available = {}
+            try:
+                from core.models.SigLIP_embedding import MultimodalEmbeddingSigLIP
+
+                available["siglip"] = MultimodalEmbeddingSigLIP(fp16=True)
+            except Exception as exc:
+                logger.warning("siglip unavailable, skipping that vector: %s", exc)
+            try:
+                from core.models.JinaCLIP_embedding import MultimodalEmbeddingJinaCLIP
+
+                available["jina"] = MultimodalEmbeddingJinaCLIP(fp16=True)
+            except Exception as exc:
+                logger.warning("jina unavailable, skipping that vector: %s", exc)
+            if not available:
+                raise RuntimeError("no visual embedder could be loaded")
+            logger.info("embedders ready: %s", ", ".join(sorted(available)))
+            self._cache["embed"] = available
         return self._cache["embed"]
 
     def qdrant(self):
@@ -256,25 +272,23 @@ def stage_keyframes(video_id: str, ctx: Ctx) -> None:
 
 def stage_embed(video_id: str, ctx: Ctx) -> None:
     records = json.loads(ctx.keyframe_index(video_id).read_text())
-    siglip, jina = ctx.embedders()
     paths = [str(ctx.data_root / r["file_path"]) for r in records]
 
-    sig = np.asarray(siglip.get_batch_image_embeddings(paths), dtype=np.float32)
-    jin = np.asarray(jina.get_batch_image_embeddings(paths), dtype=np.float32)
-    if sig.shape[0] != len(records) or jin.shape[0] != len(records):
-        raise RuntimeError(
-            f"{video_id}: embedding count mismatch "
-            f"siglip={sig.shape} jina={jin.shape} records={len(records)}"
+    arrays = {"file_paths": np.array([r["file_path"] for r in records])}
+    for name, model in ctx.embedders().items():
+        vectors = np.asarray(
+            model.get_batch_image_embeddings(paths), dtype=np.float32
         )
+        if vectors.shape[0] != len(records):
+            raise RuntimeError(
+                f"{video_id}: {name} returned {vectors.shape[0]} vectors "
+                f"for {len(records)} keyframes"
+            )
+        arrays[name] = vectors
 
     out = ctx.embeds_npz(video_id)
     out.parent.mkdir(parents=True, exist_ok=True)
-    np.savez_compressed(
-        out,
-        siglip=sig,
-        jina=jin,
-        file_paths=np.array([r["file_path"] for r in records]),
-    )
+    np.savez_compressed(out, **arrays)
 
 
 def stage_asr(video_id: str, ctx: Ctx) -> None:
@@ -353,12 +367,17 @@ def stage_index(video_id: str, ctx: Ctx) -> None:
 
     records = json.loads(ctx.keyframe_index(video_id).read_text())
     data = np.load(ctx.embeds_npz(video_id), allow_pickle=False)
-    sig, jin = data["siglip"], data["jina"]
     stored_paths = [str(p) for p in data["file_paths"]]
     if stored_paths != [r["file_path"] for r in records]:
         raise RuntimeError(
             f"{video_id}: embeds out of sync with keyframe index; rerun embed"
         )
+    # Whichever vectors stage_embed managed to produce. Qdrant accepts a subset
+    # of a collection's named vectors, so a missing model costs one source, not
+    # the whole index.
+    vector_names = [n for n in ("siglip", "jina") if n in data.files]
+    if not vector_names:
+        raise RuntimeError(f"{video_id}: embeds file has no vectors")
 
     points = []
     for i, r in enumerate(records):
@@ -375,7 +394,7 @@ def stage_index(video_id: str, ctx: Ctx) -> None:
         points.append(
             PointStruct(
                 id=point_id_for(video_id, r["shot_number"], r["frame_index"]),
-                vector={"siglip": sig[i].tolist(), "jina": jin[i].tolist()},
+                vector={n: data[n][i].tolist() for n in vector_names},
                 payload=payload,
             )
         )
