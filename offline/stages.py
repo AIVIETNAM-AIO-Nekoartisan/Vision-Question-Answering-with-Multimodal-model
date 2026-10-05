@@ -350,13 +350,39 @@ def stage_ocr(video_id: str, ctx: Ctx) -> None:
 
     records = json.loads(ctx.keyframe_index(video_id).read_text())
     if "ocr" not in ctx._cache:
-        ctx._cache["ocr"] = MultiLLMOCR()
+        # Three defaults in MultiLLMOCR have to be overridden here:
+        #
+        #  model_name: gemini-2.0-flash returns 404 for these keys, which are
+        #    Vertex AI Express keys bound to project 26275598820 in
+        #    asia-southeast1. Probed directly, gemini-2.5-flash answers.
+        #  batch_size/max_output_tokens: the defaults are 128 images against 500
+        #    output tokens, about 4 tokens per image, while each needs a
+        #    {"text", "caption"} object of 50-60. The reply was truncated
+        #    mid-string, json.loads failed, and the parser returned all-None —
+        #    so OCR "succeeded" with no text at all. 2.5-flash also spends output
+        #    budget on thinking, so the headroom is deliberately large.
+        #  num_llms: the default of 6 would leave 24 of the 30 keys idle.
+        ctx._cache["ocr"] = MultiLLMOCR(
+            model_name=os.getenv("OCR_MODEL", "gemini-2.5-flash"),
+            num_llms=int(os.getenv("OCR_NUM_LLMS", "30")),
+            batch_size=int(os.getenv("OCR_BATCH_SIZE", "24")),
+            max_output_tokens=int(os.getenv("OCR_MAX_TOKENS", "16384")),
+        )
     ocr = ctx._cache["ocr"]
 
     rows = []
     for result in ocr.process_directory_iter(str(ctx.keyframe_dir(video_id))):
-        text = (result.get("text") or result.get("ocr_text") or "").strip()
-        name = Path(str(result.get("file_path") or result.get("image") or "")).name
+        # The text is nested under "ocr_result", not at the top level. Reading
+        # result["text"] silently yielded nothing for every keyframe even though
+        # Gemini was returning "Omeleto", "DRESS UP" and so on.
+        payload = result.get("ocr_result") or {}
+        if isinstance(payload, str):
+            try:
+                payload = json.loads(payload)
+            except json.JSONDecodeError:
+                payload = {}
+        text = str((payload or {}).get("text") or "").strip()
+        name = Path(str(result.get("file_path") or "")).name
         if not text or not name:
             continue
         match = next((r for r in records if Path(r["file_path"]).name == name), None)
@@ -369,6 +395,17 @@ def stage_ocr(video_id: str, ctx: Ctx) -> None:
                 "timestamp": match["timestamp"],
                 "text": text,
             }
+        )
+
+    # Fail loudly on a total blank. A truncated reply makes the parser return
+    # all-None, which previously wrote an empty file and marked the stage done —
+    # the OCR branch would have scored zero for a parsing bug rather than for the
+    # genuine reason the spec predicted. Some videos really do have no on-screen
+    # text, so the guard trips only when nothing at all came back.
+    if not rows and len(records) >= 20:
+        raise RuntimeError(
+            f"{video_id}: OCR returned no text for any of {len(records)} keyframes; "
+            "check the model id, batch size and max_output_tokens"
         )
 
     out = ctx.ocr_json(video_id)
