@@ -30,7 +30,11 @@ while :; do
   [ "$have" -ge "$NEEDED" ] && break
 
   # Respawn the fetcher if it died; curl resumes from wherever it stopped.
-  if ! pgrep -f 'fetch_model_curl' > /dev/null; then
+  # Checked via PID file rather than pgrep: `pgrep -f fetch_model_curl` matched
+  # this script's own command line and every shell inspecting the download, so
+  # the waiter believed a fetcher was alive and quietly stopped respawning it.
+  fetcher_pid=$(cat "$QWEN_DIR/fetcher.pid" 2>/dev/null || echo "")
+  if [ -z "$fetcher_pid" ] || ! kill -0 "$fetcher_pid" 2>/dev/null; then
     log "fetcher not running at $((have/1024/1024))MB - respawning"
     setsid nohup "$FETCHER" Qwen/Qwen2.5-VL-3B-Instruct "$QWEN_DIR" \
       >/dev/null 2>&1 < /dev/null &

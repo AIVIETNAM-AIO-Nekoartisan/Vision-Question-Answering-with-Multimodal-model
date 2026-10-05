@@ -20,9 +20,25 @@ MIN_FREE_GB=3
 
 mkdir -p "$DEST"
 LOG="$DEST/fetch.log"
+PIDFILE="$DEST/fetcher.pid"
+LOCKFILE="$DEST/fetcher.lock"
 log() { echo "[$(date '+%m-%d %H:%M:%S')] $*" | tee -a "$LOG"; }
 
-log "=== $REPO -> $DEST ==="
+# flock, not pgrep and not a PID file alone. Two earlier attempts both failed:
+# `pgrep -f fetch_model_curl` matched the watcher's own command line and any
+# shell inspecting the download, so it stopped respawning; and a bare PID file
+# is check-then-write, so a respawn racing a manual launch produced two curls
+# appending to the same output. Two writers on one -C - transfer corrupt it
+# silently, and from_pretrained does not verify safetensors checksums.
+exec 9>"$LOCKFILE"
+if ! flock -n 9; then
+  log "another fetcher holds the lock; exiting"
+  exit 0
+fi
+echo $$ > "$PIDFILE"
+trap 'rm -f "$PIDFILE"' EXIT INT TERM
+
+log "=== $REPO -> $DEST (pid $$) ==="
 
 files=$(curl -sS --retry 10 --retry-delay 5 --retry-all-errors \
   "https://huggingface.co/api/models/$REPO/tree/main?recursive=1" \
