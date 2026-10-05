@@ -106,9 +106,18 @@ for cfg in baseline-uniform visual-only +asr-gt; do
   run_eval "$cfg" dev
 done
 
-# --- Phase B: OCR. gemini-2.0-flash batches 128 images per request across 30
-# keys, so 54,802 keyframes is ~428 requests, not 54,802. ---
+# --- Phase B: OCR ---
+# Takes the same lock as scripts/run_asr_ocr_now.sh, which may already be part
+# way through this work. Without it both processes would read the same pending
+# list from the manifest and OCR the same videos twice.
 log "--- phase B: Gemini OCR over 200 videos ---"
+exec 8>"$DATA_ROOT/asr_ocr.lock"
+if ! flock -n 8; then
+  log "run_asr_ocr_now.sh holds the asr/ocr lock; waiting for it to finish"
+  flock 8
+  log "lock acquired"
+fi
+
 if [ "$(sqlite3 "$DATA_ROOT/manifest.db" \
         "SELECT COUNT(*) FROM stage_state WHERE stage='ocr' AND status='done';" \
         2>/dev/null || echo 0)" -lt 200 ]; then
@@ -122,7 +131,10 @@ run_eval "+ocr" dev
 
 # --- Phase C: Whisper. Writes to asr_whisper/ and asr_data_whisper so the
 # subtitle corpus survives intact and the comparison stays honest. ---
-log "--- phase C: Whisper over 200 videos (~5h GPU) ---"
+# Measured at 40.9x realtime on video 001, so ~40 minutes for 200 videos rather
+# than the 5 hours a transformers-based Whisper would have taken. Still holding
+# the asr/ocr lock from phase B, so this cannot race the other script either.
+log "--- phase C: Whisper over 200 videos (~40min GPU) ---"
 if [ ! -f "$DATA_ROOT/asr_whisper/200.json" ]; then
   ASR_SOURCE=whisper py -m offline.run --stages asr --force >> "$LOG" 2>&1
   log "whisper asr rc=$?; indexing into the whisper index"
