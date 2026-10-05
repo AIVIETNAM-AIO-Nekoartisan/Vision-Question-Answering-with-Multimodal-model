@@ -66,9 +66,14 @@ for path in $files; do
   fi
 
   log "$path fetching (have $((local_size/1024/1024))MB of $((${remote:-0}/1024/1024))MB)"
+  # --speed-limit is 1KB/s over 10 minutes, not 10KB/s over 2 minutes. The
+  # stricter guard was aborting roughly every two minutes while the CDN served
+  # ~2KB/s, and each abort plus retry churned the partial file instead of
+  # extending it — the log showed 7MB, then 0MB, then 23MB. A genuinely dead
+  # transfer still trips this; a slow-but-advancing one no longer does.
   curl -sSL --fail -C - \
-    --retry 999 --retry-delay 10 --retry-all-errors \
-    --connect-timeout 30 --speed-limit 10240 --speed-time 120 \
+    --retry 999 --retry-delay 15 --retry-all-errors \
+    --connect-timeout 30 --speed-limit 1024 --speed-time 600 \
     ${TOKEN:+-H "Authorization: Bearer $TOKEN"} \
     -o "$out" \
     "https://huggingface.co/$REPO/resolve/main/$path" >> "$LOG" 2>&1
