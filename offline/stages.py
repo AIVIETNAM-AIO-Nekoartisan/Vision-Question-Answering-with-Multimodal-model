@@ -384,11 +384,14 @@ def stage_index(video_id: str, ctx: Ctx) -> None:
     asr_path = ctx.asr_json(video_id)
     if asr_path.exists():
         blob = json.loads(asr_path.read_text())
+        # The field must be named `content`: ElasticsearchService.search queries
+        # content, content.ngram and content.exact. A `text` field would index
+        # fine and never match anything.
         docs = [
             {
                 "file_path": f"asr/{video_id}/{i}",
                 "video_id": video_id,
-                "text": s["text"],
+                "content": s["text"],
                 "start": s["start"],
                 "end": s["end"],
                 "source": blob.get("source", ctx.asr_source),
@@ -406,7 +409,7 @@ def stage_index(video_id: str, ctx: Ctx) -> None:
             {
                 "file_path": r["file_path"],
                 "video_id": video_id,
-                "text": r["text"],
+                "content": r["text"],
                 "shot_number": r["shot_number"],
                 "timestamp": r["timestamp"],
             }
