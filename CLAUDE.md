@@ -123,3 +123,84 @@ So `baseline-uniform` is mandatory, and results are always reported per Level.
 Level 1 (Retrieval & Aggregation) should favour retrieval; Level 3 (complex
 reasoning over the whole video) is expected to lose to the baseline. That is a
 valid finding, not a bug — provided the per-Level breakdown is shown.
+
+## Failure modes already diagnosed
+
+Each of these cost real time to find. Don't re-derive them.
+
+**Elasticsearch wedges on the disk watermark.** Symptom: documents never arrive,
+`Lỗi upsert: Connection timed out`, and `number_of_pending_tasks` stuck above zero
+with `cluster_reroute(disk threshold monitor)` and
+`update_tsdb_data_stream_end_times` aged in hours. `/mnt/data` sits at 91% from
+unrelated projects, above ES's default 90% high watermark, so the reroute task
+wedges the cluster-state queue and every `put-mapping` behind it times out — the
+call to raise the watermark included, since that is itself a cluster-state update.
+Writes to an *existing* mapping keep working, which masks it: `asr_data` looked
+healthy while 30,251 OCR documents landed as zero.
+Fix: `docker restart vqa-elasticsearch`, then confirm `pending` is 0. Watermarks
+are set to 95/97/98 persistently; the indices total a few megabytes.
+
+**Never delete anything under `/mnt/data` to free space.** `aic25-selected-cache`
+(36G), `birdnet_forest_multilabel` (16G), `hf_cache` (9.8G) and `conda_pkgs` (7.8G)
+belong to the user's other projects.
+
+**`pgrep -cf '<pattern>'` overcounts**: the pattern matches the inspecting shell's
+own command line. This produced two wrong diagnoses — a watcher concluded a dead
+fetcher was alive and stopped respawning it, and a measurement reported four
+concurrent curls where there was one. Use `ps | grep` and read the list. Scripts
+coordinate with `flock`, never with pgrep.
+
+**Never edit a shell script while it runs.** Bash reads by byte offset, so inserted
+lines make it resume mid-token. Let the current step finish, kill the wrapper, then
+relaunch; the scripts are resumable.
+
+**Two writers on one download corrupt it silently.** `from_pretrained` does not
+verify safetensors checksums. `scripts/fetch_model_curl.sh` takes an flock, and
+drives retries from its own loop rather than curl's: curl's internal `--retry`
+truncates and rewrites from byte 0 when the CDN answers a resumed request with 200
+instead of 206, which collapsed one transfer from 261MB to 0MB twice.
+
+**Byte count is not "loadable".** A weights gate that only summed `.safetensors`
+passed while `model.safetensors.index.json` was still downloading, and transformers
+reported `no file named model.safetensors`. Check the shard index and that every
+shard it names exists.
+
+**Models that cannot be downloaded here, and where they already are:**
+
+| Model | Use this |
+|---|---|
+| SigLIP2 so400m | `SIGLIP_MODEL=/mnt/data/aic25-clean-models/siglip` (complete, 4,544,143,072 bytes) |
+| faster-whisper large-v3 | `~/.cache/huggingface/hub/models--Systran--faster-whisper-large-v3` (2.9GB) |
+| Qwen2.5-VL-3B | `/mnt/data/vqa-models/qwen2.5-vl-3b` (fetched with curl) |
+| TransNetV2 | `/mnt/data/AIC_2025-main/model_weights/transnetv2-pytorch-weights.pth` |
+
+`SigLIP_embedding.py` hardcoded the hub id, so every run silently dropped the
+siglip vector and reported jina-only numbers. It now reads `SIGLIP_MODEL`.
+
+**Gemini OCR:** the keys are Vertex AI Express keys bound to project 26275598820
+in asia-southeast1. `gemini-2.0-flash` 404s there; `gemini-2.5-flash` answers.
+`MultiLLMOCR`'s defaults are also wrong for this job — 128 images against 500
+output tokens truncates the JSON mid-string and `_parse_array_of_pairs` then
+returns all-None, so OCR "succeeds" with no text. Use 24 images, 16384 tokens, 30
+clients. A video with genuinely no on-screen text (062, 063, 183) is not a failure.
+
+**`--stages index_text`, not `index --force`, to push ASR/OCR text.** The latter
+also re-upserts all 54,802 Qdrant vectors at roughly a video a minute — 3.3 hours
+to deliver documents that take minutes. `index --force` is right only when the
+vectors themselves changed.
+
+## Reading the results honestly
+
+Accuracy alone is not a result. The configs answer the same questions, so use the
+paired McNemar test; `+5.0` points at p=0.064 is not a finding. Measured on dev:
+`baseline-uniform` 0.255, `visual-only` 0.305 (p=0.064), `+asr-gt` 0.340
+(p=0.0023 vs baseline, p=0.039 vs visual-only).
+
+Never interpret a subset with n under 10: on dev, `Frames & Audio` has n=2 and
+`Action & Motion` n=4, so their 1.000 and 0.000 are noise. Dev is skewed toward
+the hardest level (L1=29, L2=51, L3=120), so its accuracy understates a balanced
+result.
+
+The §2.1 sanity check: switching on ASR must leave `Frame-Only` unchanged while
+`Order` and `Change` improve. It held — 0.519 → 0.519 with Order +0.091. If
+`Frame-Only` moves, suspect leakage.
