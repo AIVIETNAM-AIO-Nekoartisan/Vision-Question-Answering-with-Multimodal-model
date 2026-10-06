@@ -114,8 +114,14 @@ PY
   fi
 }
 
-log "--- dev split, all six configs ---"
-for cfg in baseline-uniform visual-only +asr-gt +ocr +asr-whisper full; do
+# Five configs, not six: +asr-whisper is dropped from the sweep. It stays in
+# eval/configs.py and its Elasticsearch index (asr_data_whisper, 17,408 docs)
+# is built, so it can be run later with one command. Dropping it also drops the
+# ASR-error measurement — +asr-gt uses ground-truth subtitles, which do not
+# exist in a deployed system, so the gap between the two was the only number
+# saying what real transcription costs. It measured 2.0 points.
+log "--- dev split, five configs ---"
+for cfg in baseline-uniform visual-only +asr-gt +ocr full; do
   run_eval "$cfg" dev
 done
 
@@ -134,7 +140,7 @@ PY
 )
 log "--- gate: $gate ---"
 if [ "$gate" = "pass" ]; then
-  for cfg in baseline-uniform visual-only +asr-gt +ocr +asr-whisper full; do
+  for cfg in baseline-uniform visual-only +asr-gt +ocr full; do
     run_eval "$cfg" test
   done
 else
