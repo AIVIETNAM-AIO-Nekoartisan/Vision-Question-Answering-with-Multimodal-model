@@ -371,7 +371,12 @@ def stage_ocr(video_id: str, ctx: Ctx) -> None:
     ocr = ctx._cache["ocr"]
 
     rows = []
+    n_results = 0
+    n_ok = 0
     for result in ocr.process_directory_iter(str(ctx.keyframe_dir(video_id))):
+        n_results += 1
+        if str(result.get("status") or "").lower() == "success":
+            n_ok += 1
         # The text is nested under "ocr_result", not at the top level. Reading
         # result["text"] silently yielded nothing for every keyframe even though
         # Gemini was returning "Omeleto", "DRESS UP" and so on.
@@ -397,15 +402,24 @@ def stage_ocr(video_id: str, ctx: Ctx) -> None:
             }
         )
 
-    # Fail loudly on a total blank. A truncated reply makes the parser return
-    # all-None, which previously wrote an empty file and marked the stage done —
-    # the OCR branch would have scored zero for a parsing bug rather than for the
-    # genuine reason the spec predicted. Some videos really do have no on-screen
-    # text, so the guard trips only when nothing at all came back.
-    if not rows and len(records) >= 20:
+    # Distinguish a broken call from a video that genuinely has no text on
+    # screen. The earlier version failed on zero rows alone, which flagged videos
+    # 062, 063 and 183 as errors even though Gemini had answered correctly with
+    # text=null for every keyframe — probed directly, 062 returns a valid
+    # 1187-character reply with six nulls. What must still fail loudly is the
+    # opposite case: calls that never succeeded, which previously wrote an empty
+    # file and marked the stage done, so a parsing bug would have been reported
+    # as "OCR contributes nothing" — the conclusion the spec predicts for a real
+    # reason, reached for a fake one.
+    if n_results and n_ok == 0:
         raise RuntimeError(
-            f"{video_id}: OCR returned no text for any of {len(records)} keyframes; "
-            "check the model id, batch size and max_output_tokens"
+            f"{video_id}: all {n_results} OCR calls failed; check the model id "
+            f"({ocr.model_name}), batch size and max_output_tokens"
+        )
+    if not rows:
+        logger.info(
+            "%s: no on-screen text in any of %d keyframes (%d/%d calls ok)",
+            video_id, len(records), n_ok, n_results,
         )
 
     out = ctx.ocr_json(video_id)
