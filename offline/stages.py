@@ -13,6 +13,7 @@ import json
 import logging
 import os
 import uuid
+from datetime import datetime
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
@@ -425,6 +426,84 @@ def stage_ocr(video_id: str, ctx: Ctx) -> None:
     out = ctx.ocr_json(video_id)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(rows))
+
+
+def _es_bulk(service, docs: list[dict], refresh: bool = False) -> int:
+    """Bulk-index documents without a refresh per call.
+
+    ElasticsearchService.upsert_documents passes refresh=True on every call. With
+    two processes indexing at once that queued 12 pending cluster tasks and every
+    bulk came back "Connection timed out", so 30,251 OCR documents landed as zero.
+    One refresh at the end of a stage is enough — nothing reads the index until
+    the evaluation starts.
+    """
+    from elasticsearch import helpers
+
+    if not docs:
+        return 0
+    service._ensure_index()
+    actions = [
+        {
+            "_index": service.index_name,
+            "_id": doc.get("id") or service._generate_id(doc.get("file_path", "")),
+            "_source": {**doc, "created_at": datetime.now().isoformat()},
+        }
+        for doc in docs
+    ]
+    helpers.bulk(
+        service.client, actions, refresh=refresh, request_timeout=180,
+        chunk_size=500, max_retries=3, initial_backoff=2,
+    )
+    return len(actions)
+
+
+def _asr_docs(video_id: str, ctx: Ctx) -> list[dict]:
+    path = ctx.asr_json(video_id)
+    if not path.exists():
+        return []
+    blob = json.loads(path.read_text())
+    source = blob.get("source", ctx.asr_source)
+    return [
+        {
+            "file_path": f"{ctx.asr_dir_name}/{video_id}/{i}",
+            "video_id": video_id,
+            "content": s["text"],
+            "start": s["start"],
+            "end": s["end"],
+            "source": source,
+        }
+        for i, s in enumerate(blob.get("segments", []))
+        if s.get("text", "").strip()
+    ]
+
+
+def _ocr_docs(video_id: str, ctx: Ctx) -> list[dict]:
+    path = ctx.ocr_json(video_id)
+    if not path.exists():
+        return []
+    return [
+        {
+            "file_path": r["file_path"],
+            "video_id": video_id,
+            "content": r["text"],
+            "shot_number": r["shot_number"],
+            "timestamp": r["timestamp"],
+        }
+        for r in json.loads(path.read_text())
+        if r.get("text", "").strip()
+    ]
+
+
+def stage_index_text(video_id: str, ctx: Ctx) -> None:
+    """Push only ASR and OCR into Elasticsearch, leaving Qdrant untouched.
+
+    Adding OCR text through `stage_index` meant re-upserting all 54,802 vectors
+    as well, which ran at roughly one video a minute — about 3.3 hours of work to
+    deliver documents that take minutes.
+    """
+    n_asr = _es_bulk(ctx.es(ctx.es_asr_index_for_source), _asr_docs(video_id, ctx))
+    n_ocr = _es_bulk(ctx.es(ctx.es_ocr_index), _ocr_docs(video_id, ctx))
+    logger.info("%s: indexed %d asr + %d ocr documents", video_id, n_asr, n_ocr)
 
 
 def stage_index(video_id: str, ctx: Ctx) -> None:

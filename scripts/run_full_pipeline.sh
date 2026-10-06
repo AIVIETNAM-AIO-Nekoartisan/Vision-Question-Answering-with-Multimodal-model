@@ -122,8 +122,11 @@ if [ "$(sqlite3 "$DATA_ROOT/manifest.db" \
         "SELECT COUNT(*) FROM stage_state WHERE stage='ocr' AND status='done';" \
         2>/dev/null || echo 0)" -lt 200 ]; then
   py -m offline.run --stages ocr >> "$LOG" 2>&1
-  log "ocr stage rc=$?; reindexing to push the OCR documents"
-  py -m offline.run --stages index --force >> "$LOG" 2>&1
+  log "ocr stage rc=$?; pushing the OCR documents"
+  # index_text, not index --force: the latter also re-upserts all 54,802 Qdrant
+  # vectors at about a video a minute, roughly 3.3 hours to deliver documents
+  # that take a few minutes.
+  py -m offline.run --stages index_text --force >> "$LOG" 2>&1
 else
   log "ocr already done for 200 videos"
 fi
@@ -138,7 +141,7 @@ log "--- phase C: Whisper over 200 videos (~40min GPU) ---"
 if [ ! -f "$DATA_ROOT/asr_whisper/200.json" ]; then
   ASR_SOURCE=whisper py -m offline.run --stages asr --force >> "$LOG" 2>&1
   log "whisper asr rc=$?; indexing into the whisper index"
-  ASR_SOURCE=whisper py -m offline.run --stages index --force >> "$LOG" 2>&1
+  ASR_SOURCE=whisper py -m offline.run --stages index_text --force >> "$LOG" 2>&1
 else
   log "whisper transcripts already present"
 fi

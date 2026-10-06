@@ -25,6 +25,7 @@ _FUNCS = {
     "asr": S.stage_asr,
     "ocr": S.stage_ocr,
     "index": S.stage_index,
+    "index_text": S.stage_index_text,
 }
 
 

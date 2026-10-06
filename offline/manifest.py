@@ -11,7 +11,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
+# index_text is not in the default sweep: it is the fast path for pushing
+# ASR/OCR to Elasticsearch without re-upserting every Qdrant vector.
 STAGES = ("shots", "keyframes", "embed", "asr", "ocr", "index")
+EXTRA_STAGES = ("index_text",)
 
 _SCHEMA = """
 CREATE TABLE IF NOT EXISTS stage_state (
