@@ -168,12 +168,24 @@ def answer_question(
     weights: dict[str, float],
     top_k: int = 10,
     include_global_context: bool = True,
+    expand: bool = False,
 ) -> dict:
     """Retrieve evidence, prompt the VLM, parse the letter."""
     from online.backend.retrieve import retrieve
 
+    # The `full` config sets expand=True, but nothing here used to read it, so
+    # `full` returned predictions identical to `+ocr` on all 200 dev questions —
+    # 0 differences — and was not a measurement of query expansion at all.
+    query = question
+    if expand:
+        from online.backend.expand import expand_query
+
+        expanded = expand_query(question)
+        if expanded:
+            query = expanded
+
     shots = retrieve(
-        query=question,
+        query=query,
         ctx=res,
         video_id=video_id,
         weights=weights,
@@ -257,6 +269,7 @@ def answer_request(req: Any, res: Any, env_weights: dict[str, float]) -> Any:
         weights=weights,
         top_k=req.top_k,
         include_global_context=req.include_global_context,
+        expand=getattr(req, "expand", False),
     )
     return VQAResponse(
         question_id=req.question_id,

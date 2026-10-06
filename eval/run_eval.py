@@ -138,6 +138,7 @@ def _predict_all(
                 weights=cfg["weights"],
                 top_k=top_k if cfg["retrieval"] else 0,
                 include_global_context=cfg["global_context"],
+                expand=cfg.get("expand", False),
             )
             predictions[q.question_id] = out["answer"]
             details.append(
