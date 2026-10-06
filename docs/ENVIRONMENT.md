@@ -1,11 +1,6 @@
-# CLAUDE.md
+# Environment notes
 
-Retrieval-augmented VQA on Video-MME-v2. Built on the AIC 2025 codebase at
-`/mnt/data/AIC_2025-main` (read-only: it sits on branch `asr-full-b1` with 48
-uncommitted files — copy out, never write in).
-
-Design: `docs/superpowers/specs/2026-10-04-vqa-videomme-design.md`
-Plan: `docs/superpowers/plans/2026-10-04-vqa-videomme.md`
+Facts about this machine and dataset that cost real time to discover.
 
 ## Hard constraints
 
@@ -63,66 +58,6 @@ Lucene-compatible file locking.
   hf_xet hangs indefinitely here.
 - Link speed is ~1.75 MB/s and drops intermittently. Parallel connections do
   not help; that is the whole pipe.
-
-## Commands
-
-```bash
-docker compose up -d                      # Qdrant :6333, Elasticsearch :9200
-set -a; . ./.env; set +a
-
-conda run -n jina_env python -m offline.run --stages all
-conda run -n jina_env python -m offline.run --stages shots,keyframes --limit 2
-conda run -n jina_env python -m offline.run --stages ocr --dev-only
-
-conda run -n jina_env python -m online.backend.api_server       # :8000
-cd online/frontend && npm start                                  # :3000
-
-conda run -n jina_env python -m eval.run_eval --config visual-only --split dev
-conda run -n jina_env python -m unittest discover -s tests -v
-```
-
-Watch an overnight run: `scripts/watch_download_and_index.sh` respawns the
-fetcher if it dies and indexes each batch as it lands.
-
-## Dev/test discipline
-
-The split is by **video**, not by question — four questions share a video, so
-splitting on questions leaks.
-
-| Split | Videos | Questions | Use |
-|---|---|---|---|
-| dev | `001`–`050` | 200 | Tune RRF weights, `top_k`, thresholds; measure OCR's value |
-| test | `051`–`200` | 600 | One run per config, for reporting |
-
-`eval/run_eval.py --split` defaults to `dev` deliberately. Repeatedly touching
-test to pick parameters invalidates every number in the report.
-
-## What was dropped from AIC, and do not re-add
-
-BEiT-3, BLIP2, OpenCLIP, YOLOE, GPT4o, `core/events/*`, `guided*`, `agent*`,
-`search_{temporal,composed,events,intelligent}`, `submission_checker`, DRES, and
-the caption/BGE-M3 collection. `enrich_results_metadata` went with the caption
-collection it hydrated.
-
-`routes.py`, `resources.py` and `schemas.py` are **written fresh**, not trimmed:
-AIC's routes.py holds 39 references to `events`, 36 to `guided`, 18 to BEiT-3
-and 14 to the agent layer.
-
-`parsing.py`'s `_VIDEO_NAME_RE` was widened: it matched only AIC names
-(`L01_V001`), so every Video-MME-v2 result (`001`–`200`) was flagged as needing
-metadata repair.
-
-## Research question
-
-Not "how high can accuracy go" but:
-
-> Does retrieval-augmented VQA beat uniform frame sampling, and on which kinds
-> of question?
-
-So `baseline-uniform` is mandatory, and results are always reported per Level.
-Level 1 (Retrieval & Aggregation) should favour retrieval; Level 3 (complex
-reasoning over the whole video) is expected to lose to the baseline. That is a
-valid finding, not a bug — provided the per-Level breakdown is shown.
 
 ## Failure modes already diagnosed
 
@@ -188,19 +123,3 @@ clients. A video with genuinely no on-screen text (062, 063, 183) is not a failu
 also re-upserts all 54,802 Qdrant vectors at roughly a video a minute — 3.3 hours
 to deliver documents that take minutes. `index --force` is right only when the
 vectors themselves changed.
-
-## Reading the results honestly
-
-Accuracy alone is not a result. The configs answer the same questions, so use the
-paired McNemar test; `+5.0` points at p=0.064 is not a finding. Measured on dev:
-`baseline-uniform` 0.255, `visual-only` 0.305 (p=0.064), `+asr-gt` 0.340
-(p=0.0023 vs baseline, p=0.039 vs visual-only).
-
-Never interpret a subset with n under 10: on dev, `Frames & Audio` has n=2 and
-`Action & Motion` n=4, so their 1.000 and 0.000 are noise. Dev is skewed toward
-the hardest level (L1=29, L2=51, L3=120), so its accuracy understates a balanced
-result.
-
-The §2.1 sanity check: switching on ASR must leave `Frame-Only` unchanged while
-`Order` and `Change` improve. It held — 0.519 → 0.519 with Order +0.091. If
-`Frame-Only` moves, suspect leakage.

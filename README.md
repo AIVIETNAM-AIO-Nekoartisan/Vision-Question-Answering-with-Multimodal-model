@@ -141,11 +141,7 @@ lowercase text padded to exactly 64 tokens.
 loader, the stage orchestrator, shot detection over PyAV, the retrieval layer,
 Qwen answering and the eval harness are written for this project.
 
-See [`CLAUDE.md`](CLAUDE.md) for the environment constraints and the failure modes
-already diagnosed — the exFAT/ext4 split, the unreachable package registries and
+See [`docs/ENVIRONMENT.md`](docs/ENVIRONMENT.md) for the environment constraints
+and the failure modes already diagnosed — the exFAT/ext4 split, the unreachable package registries and
 the substitutions they forced, and an Elasticsearch disk-watermark deadlock that
 silently dropped 30,251 documents.
-
-## Licence note
-
-`jina-clip-v2` is CC-BY-NC-4.0 (non-commercial). Video-MME-v2 is MIT.
