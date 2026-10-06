@@ -5,6 +5,7 @@ import time
 from typing import Union
 
 import numpy as np
+import os
 import torch
 from PIL import Image
 from transformers import AutoModel
@@ -21,7 +22,14 @@ class MultimodalEmbeddingJinaCLIP:
 
     def __init__(self, fp16: bool = True, cache_size: int = 1000,
                  model_name: str = "jinaai/jina-clip-v2"):
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        # EMBED_DEVICE=cpu keeps this off the card during evaluation, where Qwen
+        # needs the room: siglip 2.27GB + jina 1.73GB + Qwen 7.5GB reached 12.26GB
+        # reserved of 12.49GB after an 18-image prefill. Query time only encodes
+        # one short text, so CPU costs milliseconds.
+        forced = os.getenv("EMBED_DEVICE")
+        self.device = torch.device(
+            forced if forced else ("cuda" if torch.cuda.is_available() else "cpu")
+        )
         self.dtype = torch.float16 if (fp16 and self.device.type == "cuda") else torch.float32
 
         print(f"Loading Jina-CLIP-v2 on {self.device} (dtype={self.dtype})...")

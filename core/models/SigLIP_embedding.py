@@ -15,7 +15,18 @@ import requests
 class MultimodalEmbeddingSigLIP:
     def __init__(self, fp16: bool = True, cache_size: int = 1000):
         self.dtype = torch.float16 if fp16 else torch.float32
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        # EMBED_DEVICE=cpu keeps this off the card during evaluation. Measured
+        # resident cost is 2.27GB for siglip and 1.73GB for jina; with Qwen's
+        # 7.5GB that reaches 11.62GB reserved of 12.49GB, and an 18-image prefill
+        # pushed it to 12.26GB — 0.23GB from the edge. At query time these models
+        # only encode one short text, so CPU costs milliseconds; the keyframes
+        # were embedded offline long ago.
+        forced = os.getenv("EMBED_DEVICE")
+        self.device = torch.device(
+            forced if forced else ("cuda" if torch.cuda.is_available() else "cpu")
+        )
+        if self.device.type == "cpu":
+            self.dtype = torch.float32  # fp16 matmul is not supported on CPU
 
         # 🚀 OPTIMIZATION 1: Model optimization
         print(f"Loading optimized SigLIP model on {self.device}...")
