@@ -32,6 +32,9 @@ _NS = uuid.UUID("6f3a1e84-0d2b-4c7e-9f15-8b2d4a6c1e90")
 
 PHASH_THRESHOLD = 4
 KEYFRAME_MAX_SIDE = 448
+# Keyframes per embedding call. Bounds VRAM independently of video length:
+# the longest video has 781 keyframes and a single call for it needed 2.8GB.
+EMBED_CHUNK = int(os.getenv('EMBED_CHUNK', '64'))
 
 
 def point_id_for(video_id: str, shot_number: int, frame_index: int) -> str:
@@ -295,9 +298,20 @@ def stage_embed(video_id: str, ctx: Ctx) -> None:
 
     arrays = {"file_paths": np.array([r["file_path"] for r in records])}
     for name, model in ctx.embedders().items():
-        vectors = np.asarray(
-            model.get_batch_image_embeddings(paths), dtype=np.float32
-        )
+        # Chunked, because passing a whole video at once scales VRAM with its
+        # length. Videos run from 122 keyframes to 781, and the long ones tried to
+        # allocate 2.8GB in a single call: 46 of the first 156 videos died of CUDA
+        # OOM, and every one of them was a long video while every success was
+        # short. A fixed chunk makes peak memory independent of video length.
+        chunks = []
+        for start in range(0, len(paths), EMBED_CHUNK):
+            chunk = paths[start:start + EMBED_CHUNK]
+            chunks.append(
+                np.asarray(
+                    model.get_batch_image_embeddings(chunk), dtype=np.float32
+                )
+            )
+        vectors = np.concatenate(chunks, axis=0) if chunks else np.empty((0, 0))
         if vectors.shape[0] != len(records):
             raise RuntimeError(
                 f"{video_id}: {name} returned {vectors.shape[0]} vectors "
