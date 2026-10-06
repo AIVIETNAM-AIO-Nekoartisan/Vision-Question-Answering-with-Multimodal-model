@@ -94,10 +94,15 @@ def build_mcq_prompt(
     if shots:
         parts.append(
             "The remaining images are the moments most relevant to the question, "
-            "in chronological order:"
+            "in chronological order. Each labelled span gives several frames "
+            "from before, during and after that moment:"
         )
         for shot in shots:
-            line = f"{_mmss(shot.get('timestamp'))}"
+            # A window spans time; label the span so before/after is explicit.
+            if shot.get("start_time") is not None and shot.get("end_time") is not None:
+                line = f"{_mmss(shot['start_time'])}-{_mmss(shot['end_time'])}"
+            else:
+                line = f"{_mmss(shot.get('timestamp'))}"
             asr = str(shot.get("asr") or "").strip()
             ocr = str(shot.get("ocr") or "").strip()
             if asr:
@@ -125,37 +130,79 @@ def _load_asr(data_root: Path, video_id: str) -> list[dict]:
         return []
 
 
-def _load_ocr(data_root: Path, video_id: str) -> dict[str, str]:
+ASR_PAD_S = 1.5
+
+
+def _load_ocr_by_shot(data_root: Path, video_id: str) -> dict[int, str]:
+    """All on-screen text per shot, deduplicated, not just the chosen frame.
+
+    Looking OCR up by the representative frame's file_path dropped text that
+    appeared on any other keyframe of the same shot. With 55% of keyframes
+    carrying text, most of a shot's text was being discarded.
+    """
     path = data_root / "ocr" / f"{video_id}.json"
     if not path.is_file():
         return {}
     try:
-        return {
-            r["file_path"]: r["text"]
-            for r in json.loads(path.read_text())
-            if r.get("file_path")
-        }
+        rows = json.loads(path.read_text())
     except (OSError, json.JSONDecodeError):
         return {}
 
+    per_shot: dict[int, list[str]] = {}
+    for r in rows:
+        text = str(r.get("text") or "").strip()
+        num = r.get("shot_number")
+        if not text or num is None:
+            continue
+        lines = per_shot.setdefault(int(num), [])
+        # Watermarks repeat on nearly every frame of a shot; keep one copy.
+        if text.lower() not in {x.lower() for x in lines}:
+            lines.append(text)
+    return {num: " | ".join(lines) for num, lines in per_shot.items()}
+
+
+def _overlapping_speech(
+    segments: list[dict], start: Optional[float], end: Optional[float],
+    pad: float = ASR_PAD_S,
+) -> str:
+    """Speech overlapping a time span, not speech containing a single instant.
+
+    The previous rule tested `segment.start <= frame_ts <= segment.end` against
+    the representative frame's timestamp alone, so a line spoken at the start of
+    a shot was lost whenever the chosen keyframe sat at the end of it. Interval
+    overlap with a small pad keeps the line attached to the shot it belongs to.
+    """
+    if start is None and end is None:
+        return ""
+    lo = float(start if start is not None else end) - pad
+    hi = float(end if end is not None else start) + pad
+    spoken = [
+        str(s.get("text", "")).strip()
+        for s in segments
+        if float(s.get("end", 0.0)) >= lo and float(s.get("start", 0.0)) <= hi
+    ]
+    return " ".join(x for x in spoken if x)
+
 
 def _attach_text(
-    shots: list[dict], segments: list[dict], ocr_by_path: dict[str, str]
+    shots: list[dict], segments: list[dict], ocr_by_shot: dict[int, str]
 ) -> list[dict]:
-    """Give each shot the speech spoken over it and any text on its keyframe."""
+    """Attach the speech overlapping each shot and all of its on-screen text."""
     out = []
     for shot in shots:
-        ts = shot.get("timestamp")
-        asr = ""
-        if ts is not None:
-            spoken = [
-                str(s.get("text", "")).strip()
-                for s in segments
-                if float(s.get("start", 0.0)) <= float(ts) <= float(s.get("end", 0.0))
-            ]
-            asr = " ".join(x for x in spoken if x)
+        payload = shot.get("payload") or {}
+        sh = payload.get("shot") or {}
+        start = sh.get("start")
+        end = sh.get("end")
+        if start is None and end is None:
+            start = end = shot.get("timestamp")
+        num = sh.get("number")
         out.append(
-            {**shot, "asr": asr, "ocr": ocr_by_path.get(shot.get("file_path", ""), "")}
+            {
+                **shot,
+                "asr": _overlapping_speech(segments, start, end),
+                "ocr": ocr_by_shot.get(int(num), "") if num is not None else "",
+            }
         )
     return out
 
@@ -169,6 +216,8 @@ def answer_question(
     top_k: int = 10,
     include_global_context: bool = True,
     expand: bool = False,
+    windows: bool = True,
+    n_windows: int = 3,
 ) -> dict:
     """Retrieve evidence, prompt the VLM, parse the letter."""
     from online.backend.retrieve import retrieve
@@ -190,11 +239,13 @@ def answer_question(
         video_id=video_id,
         weights=weights,
         top_k=top_k,
+        build_windows=windows,
+        n_windows=n_windows,
     )
 
     segments = _load_asr(res.data_root, video_id)
-    ocr_by_path = _load_ocr(res.data_root, video_id)
-    shots = _attach_text(shots, segments, ocr_by_path)
+    ocr_by_shot = _load_ocr_by_shot(res.data_root, video_id)
+    shots = _attach_text(shots, segments, ocr_by_shot)
 
     images: list[Path] = []
     digest = ""
@@ -213,9 +264,13 @@ def answer_question(
             logger.warning("global context unavailable for %s: %s", video_id, exc)
         digest = condense_transcript(segments)
 
-    images += [
-        res.data_root / s["file_path"] for s in shots if s.get("file_path")
-    ]
+    for s in shots:
+        frames = s.get("frames")
+        if frames:                       # a temporal window: every frame, in order
+            images += [res.data_root / f["file_path"] for f in frames
+                       if f.get("file_path")]
+        elif s.get("file_path"):         # a single shot
+            images.append(res.data_root / s["file_path"])
 
     prompt = build_mcq_prompt(question, options, shots, digest, n_global)
     raw = res.qwen.answer(images, prompt)

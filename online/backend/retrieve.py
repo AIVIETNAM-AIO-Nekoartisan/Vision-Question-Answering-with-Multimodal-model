@@ -74,8 +74,39 @@ def es_hits_to_fusable(
     return out
 
 
+def collapse_source_to_shots(hits: list) -> list:
+    """Keep one hit per shot within a single source, the best-scoring one.
+
+    Run before fusion, not after. Fusing at keyframe level gave a long shot one
+    entry per keyframe — thirteen chances for a thirteen-keyframe shot — so shots
+    won on length rather than relevance. Measured on three videos, retrieved
+    shots averaged 3.53 keyframes against a corpus mean of 2.45, a 44% bias
+    toward long shots. Collapsing first gives every shot exactly one rank per
+    source regardless of how many keyframes it contains.
+    """
+    best: dict[str, object] = {}
+    for h in hits:
+        payload = getattr(h, "payload", None) or {}
+        shot_id = payload.get("shot_id")
+        if not shot_id:
+            continue
+        prev = best.get(shot_id)
+        if prev is None or float(getattr(h, "score", 0.0)) > float(
+            getattr(prev, "score", 0.0)
+        ):
+            best[shot_id] = h
+    return sorted(
+        best.values(), key=lambda h: float(getattr(h, "score", 0.0)), reverse=True
+    )
+
+
 def aggregate_to_shots(fused: list[dict], top_k: int) -> list[dict]:
-    """Collapse fused keyframes to shots, keeping each shot's best frame."""
+    """Collapse fused entries to shots, keeping each shot's best entry.
+
+    Sources are already collapsed per shot before fusion, so this is mostly a
+    pass-through now. Ties break on how many sources agreed: RRF's sum already
+    rewards agreement, and this only orders entries it scored equally.
+    """
     best: dict[str, dict] = {}
     for item in fused:
         payload = item.get("payload") or {}
@@ -94,8 +125,116 @@ def aggregate_to_shots(fused: list[dict], top_k: int) -> list[dict]:
                 "payload": payload,
                 "rrf_components": item.get("rrf_components", []),
             }
-    ranked = sorted(best.values(), key=lambda s: s["score"], reverse=True)
+    ranked = sorted(
+        best.values(),
+        key=lambda s: (s["score"], len(s.get("rrf_components") or [])),
+        reverse=True,
+    )
     return ranked[:top_k]
+
+
+WINDOW_NEIGHBOURS = 1      # shots taken either side of a hit
+FRAMES_PER_WINDOW = 3      # first / middle / last, so change is visible
+MIN_WINDOW_GAP_S = 8.0     # keep selected windows in distinct parts of the video
+MAX_SHOTS_PER_WINDOW = 5   # a window is a moment, not a region of the video
+
+
+def build_temporal_windows(
+    shots: list[dict],
+    keyframes: list[dict],
+    n_windows: int,
+    neighbours: int = WINDOW_NEIGHBOURS,
+    frames_per_window: int = FRAMES_PER_WINDOW,
+    min_gap_s: float = MIN_WINDOW_GAP_S,
+    max_shots_per_window: int = MAX_SHOTS_PER_WINDOW,
+) -> list[dict]:
+    """Turn ranked shots into a few temporal windows of several frames each.
+
+    A single best frame per shot answers "what is in this scene" but not
+    "what changed", "which came first" or "how did they react" — those need the
+    moments either side. Each retained hit therefore becomes
+    [shot-n .. shot .. shot+n] and contributes its first, middle and last
+    keyframe in time order.
+
+    Hits closer than `min_gap_s` are merged rather than given separate budget:
+    adjacent shots are near-identical evidence, and the demo query returned
+    152_shot_110 and 152_shot_111 — two slots spent on one moment.
+    """
+    if not shots or not keyframes:
+        return []
+
+    by_shot: dict[int, list[dict]] = {}
+    for kf in keyframes:
+        num = ((kf.get("payload") or {}).get("shot") or {}).get("number")
+        if num is not None:
+            by_shot.setdefault(int(num), []).append(kf)
+    for group in by_shot.values():
+        group.sort(key=lambda k: k.get("timestamp") or 0.0)
+
+    windows: list[dict] = []
+    for shot in shots:  # already in score order
+        centre = ((shot.get("payload") or {}).get("shot") or {}).get("number")
+        ts = shot.get("timestamp")
+        if centre is None or ts is None:
+            continue
+        centre, ts = int(centre), float(ts)
+
+        merged = next(
+            (w for w in windows if abs(w["centre_time"] - ts) < min_gap_s), None
+        )
+        if merged is not None:
+            # Record that the sources agreed here, but keep the span bounded.
+            # Unioning each merged hit's neighbours without a cap grew one window
+            # to 12 shots across 56 seconds while still sampling only 3 frames,
+            # which is a region, not a moment.
+            for src in shot.get("rrf_components") or []:
+                merged["rrf_components"].add(src)
+            if len(merged["shot_numbers"]) < max_shots_per_window:
+                merged["shot_numbers"].update(
+                    n
+                    for n in range(centre - neighbours, centre + neighbours + 1)
+                    if abs(n - merged["centre_shot"]) <= max_shots_per_window // 2
+                )
+            continue
+
+        if len(windows) >= n_windows:
+            continue
+        windows.append(
+            {
+                "shot_id": shot["shot_id"],
+                "score": shot["score"],
+                "centre_time": ts,
+                "centre_shot": centre,
+                "shot_numbers": set(range(centre - neighbours, centre + neighbours + 1)),
+                "rrf_components": set(shot.get("rrf_components") or []),
+                "payload": shot.get("payload") or {},
+            }
+        )
+
+    for w in windows:
+        frames = [
+            kf for num in sorted(w["shot_numbers"]) for kf in by_shot.get(num, [])
+        ]
+        frames.sort(key=lambda k: k.get("timestamp") or 0.0)
+        if not frames:
+            continue
+        if len(frames) <= frames_per_window:
+            chosen = frames
+        else:
+            # first, middle, last: start and end expose change, middle anchors it
+            idx = sorted({0, len(frames) // 2, len(frames) - 1})
+            while len(idx) < frames_per_window and len(idx) < len(frames):
+                idx = sorted(set(idx) | {len(frames) // 4})
+            chosen = [frames[i] for i in idx[:frames_per_window]]
+        w["frames"] = chosen
+        w["start_time"] = chosen[0].get("timestamp")
+        w["end_time"] = chosen[-1].get("timestamp")
+        w["rrf_components"] = sorted(w["rrf_components"])
+        w["shot_numbers"] = sorted(w["shot_numbers"])
+
+    windows = [w for w in windows if w.get("frames")]
+    windows.sort(key=lambda w: w["centre_time"])
+    return windows
 
 
 def order_by_time(shots: list[dict]) -> list[dict]:
@@ -156,6 +295,8 @@ def retrieve(
     candidate_depth: int = 50,
     rrf_k: int = 60,
     top_k: int = 10,
+    build_windows: bool = False,
+    n_windows: int = 3,
 ) -> list[dict]:
     """Run the enabled sources, fuse, roll up to shots, order by time.
 
@@ -196,7 +337,7 @@ def retrieve(
             filter_condition=qdrant_filter,
         )
         if hits:
-            results_by_model[name] = hits
+            results_by_model[name] = collapse_source_to_shots(hits)
 
     # --- text sources ---
     need_keyframes = any(
@@ -219,7 +360,7 @@ def retrieve(
         )
         fusable = es_hits_to_fusable(raw or [], keyframes_by_video)
         if fusable:
-            results_by_model[name] = fusable
+            results_by_model[name] = collapse_source_to_shots(fusable)
 
     if not results_by_model:
         return []
@@ -230,4 +371,19 @@ def retrieve(
         weights=weights,
         topn=max(candidate_depth * 2, top_k),
     )
-    return order_by_time(aggregate_to_shots(fused, top_k))
+    ranked = aggregate_to_shots(fused, max(top_k, n_windows * 3))
+
+    if not build_windows:
+        return order_by_time(ranked[:top_k])
+
+    # Temporal windows need every keyframe of the neighbouring shots, which the
+    # text sources may not have fetched.
+    if not keyframes_by_video:
+        videos = [video_id] if video_id else ctx.all_video_ids()
+        keyframes_by_video = _keyframes_for_videos(ctx.qdrant, videos)
+    pool = [
+        kf
+        for vid in ({video_id} if video_id else keyframes_by_video)
+        for kf in keyframes_by_video.get(vid, [])
+    ]
+    return build_temporal_windows(ranked, pool, n_windows=n_windows)
