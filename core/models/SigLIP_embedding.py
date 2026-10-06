@@ -8,6 +8,7 @@ from functools import lru_cache
 import hashlib
 from typing import Union, Optional
 import io
+import os
 import time
 import requests
 
@@ -27,7 +28,12 @@ class MultimodalEmbeddingSigLIP:
         # LƯU Ý: SigLIP2 train trên text đã lowercase + pad đủ 64 token
         # (tokenizer Gemma phân biệt hoa/thường, không tự lowercase như v1) —
         # thiếu 1 trong 2 điều kiện là recall giảm mạnh (transformers#43054)
-        model_name = "google/siglip2-so400m-patch14-384"
+        # Overridable via SIGLIP_MODEL so a local directory can be used. The hub
+        # id cannot be fetched on this network, but a complete
+        # 4,544,143,072-byte model.safetensors already sits in
+        # /mnt/data/aic25-clean-models/siglip. Loading from there costs no disk,
+        # where copying it into the HF cache would take 4.5GB of the 14GB free.
+        model_name = os.getenv("SIGLIP_MODEL") or "google/siglip2-so400m-patch14-384"
         self.max_text_tokens = 64
 
         self.model = AutoModel.from_pretrained(
