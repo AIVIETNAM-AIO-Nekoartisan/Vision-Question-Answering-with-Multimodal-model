@@ -38,6 +38,10 @@ def score_group(
     ordered = sorted(questions, key=lambda q: q.question_id)
     total = len(ordered)
 
+    # Groups always have four questions in this benchmark, and the official
+    # metric divides by four rather than by the number present.
+    denom = 4.0
+
     if group_type == "logic":
         credited = 0
         for q in ordered:
@@ -45,9 +49,14 @@ def score_group(
                 credited += 1
             else:
                 break
-        return credited / total
+        return credited / denom
 
-    return sum(predictions.get(q.question_id) == q.answer for q in ordered) / total
+    # Quadratic suppression, per the paper: (N/4)^2, not N/4. Scoring the mean
+    # overstated the result — it reported 0.280 where the official formula gives
+    # 0.204 — because it gave full credit for isolated correct answers that the
+    # benchmark deliberately penalises.
+    n_correct = sum(predictions.get(q.question_id) == q.answer for q in ordered)
+    return (n_correct / denom) ** 2
 
 
 def _mean(values: list[float]) -> float:

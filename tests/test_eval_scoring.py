@@ -143,3 +143,40 @@ class TestConfigs(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestOfficialNonLinFormula(unittest.TestCase):
+    """The paper's Non-Lin Score, which the first implementation got wrong.
+
+    Consistency groups use quadratic suppression (N/4)^2, not the mean N/4, so
+    isolated correct answers earn far less than proportional credit. Coherence
+    groups keep the longest run of correct answers from the start.
+    """
+
+    def _group(self, gtype, correct_flags):
+        qsx = [q(f"001-{i+1}", "A", group_type=gtype) for i in range(4)]
+        preds = {f"001-{i+1}": ("A" if ok else "X") for i, ok in enumerate(correct_flags)}
+        return score_group(qsx, preds, gtype)
+
+    def test_consistency_is_quadratic(self):
+        self.assertAlmostEqual(self._group("relevance", [1,0,0,0]), (1/4)**2)
+        self.assertAlmostEqual(self._group("relevance", [1,1,0,0]), (2/4)**2)
+        self.assertAlmostEqual(self._group("relevance", [1,1,1,0]), (3/4)**2)
+        self.assertAlmostEqual(self._group("relevance", [1,1,1,1]), 1.0)
+
+    def test_one_of_four_is_heavily_suppressed(self):
+        """A lone correct answer earns 6.25%, not 25% — that is the point."""
+        self.assertAlmostEqual(self._group("relevance", [0,1,0,0]), 0.0625)
+
+    def test_consistency_ignores_position(self):
+        self.assertAlmostEqual(self._group("relevance", [1,0,1,0]),
+                               self._group("relevance", [0,1,0,1]))
+
+    def test_coherence_keeps_the_leading_run(self):
+        self.assertAlmostEqual(self._group("logic", [1,1,0,1]), 2/4)
+        self.assertAlmostEqual(self._group("logic", [0,1,1,1]), 0.0)
+        self.assertAlmostEqual(self._group("logic", [1,1,1,1]), 1.0)
+
+    def test_coherence_position_matters(self):
+        self.assertNotAlmostEqual(self._group("logic", [1,0,0,0]),
+                                  self._group("logic", [0,0,0,1]))
