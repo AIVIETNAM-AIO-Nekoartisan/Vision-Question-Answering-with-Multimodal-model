@@ -20,10 +20,16 @@ def q(qid, answer, level="1", group_type="relevance", head="Frame-Only"):
 
 
 class TestGroupScoring(unittest.TestCase):
-    def test_relevance_scores_each_question(self):
+    def test_relevance_uses_quadratic_suppression(self):
+        """Two of four correct scores (2/4)^2, not 2/3.
+
+        This test previously asserted the mean, which is what the implementation
+        did wrong: the official metric divides by four and squares, so isolated
+        correct answers earn much less than proportional credit.
+        """
         qs = [q("001-1", "A"), q("001-2", "B"), q("001-3", "C")]
         preds = {"001-1": "A", "001-2": "X", "001-3": "C"}
-        self.assertAlmostEqual(score_group(qs, preds, "relevance"), 2 / 3)
+        self.assertAlmostEqual(score_group(qs, preds, "relevance"), (2 / 4) ** 2)
 
     def test_logic_truncates_after_first_error(self):
         """Wrong on #2 zeroes #3 and #4 even though they match."""
@@ -56,9 +62,10 @@ class TestGroupScoring(unittest.TestCase):
         self.assertAlmostEqual(score_group(qs, preds, "logic"), 0.0)
 
     def test_unparsed_counts_as_wrong(self):
+        """One of four correct, so (1/4)^2 — an unparsed answer is simply wrong."""
         qs = [q("001-1", "A"), q("001-2", "B")]
         preds = {"001-1": None, "001-2": "B"}
-        self.assertAlmostEqual(score_group(qs, preds, "relevance"), 0.5)
+        self.assertAlmostEqual(score_group(qs, preds, "relevance"), (1 / 4) ** 2)
 
     def test_empty_group(self):
         self.assertAlmostEqual(score_group([], {}, "relevance"), 0.0)
