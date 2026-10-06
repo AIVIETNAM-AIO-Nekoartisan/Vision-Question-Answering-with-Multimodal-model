@@ -6,6 +6,9 @@ venv/
 
 # Runtime data and model weights live outside the repo (DATA_ROOT), but guard anyway
 results/
+!results/
+!results/*.md
+results/eval*/
 qdrant_data/
 model_weights/
 temp_cache/
