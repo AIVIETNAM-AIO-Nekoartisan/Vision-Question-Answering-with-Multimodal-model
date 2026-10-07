@@ -5,10 +5,11 @@ __pycache__/
 venv/
 
 # Runtime data and model weights live outside the repo (DATA_ROOT), but guard anyway
-results/
-!results/
-!results/*.md
-results/eval*/
+# results/ is tracked: the per-question JSONs are the evidence behind
+# every figure in RESULTS.md (predictions, raw VLM output, shot ids).
+# Only the superseded intermediate runs are excluded.
+results/eval-before-p234/
+results/eval-jina-only/
 qdrant_data/
 model_weights/
 temp_cache/

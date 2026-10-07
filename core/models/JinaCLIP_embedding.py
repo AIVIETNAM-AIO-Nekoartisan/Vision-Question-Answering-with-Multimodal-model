@@ -21,7 +21,10 @@ class MultimodalEmbeddingJinaCLIP:
     DIM = 1024
 
     def __init__(self, fp16: bool = True, cache_size: int = 1000,
-                 model_name: str = "jinaai/jina-clip-v2"):
+                 model_name: str = ""):
+        # JINA_MODEL takes a Hub id or a local directory, matching SIGLIP_MODEL
+        # and QWEN_VL_MODEL. It was documented but nothing read it.
+        model_name = model_name or os.getenv("JINA_MODEL") or "jinaai/jina-clip-v2"
         # EMBED_DEVICE=cpu keeps this off the card during evaluation, where Qwen
         # needs the room: siglip 2.27GB + jina 1.73GB + Qwen 7.5GB reached 12.26GB
         # reserved of 12.49GB after an 18-image prefill. Query time only encodes

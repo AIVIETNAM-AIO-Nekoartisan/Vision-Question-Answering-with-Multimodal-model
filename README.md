@@ -1,29 +1,23 @@
 # Retrieval-Augmented VQA on Video-MME-v2
 
-Answers multiple-choice questions about long videos by retrieving evidence —
-keyframes, speech, on-screen text — and giving it to a local vision-language
+Answers multiple-choice questions about long videos by retrieving evidence -
+keyframes, speech, on-screen text - and giving it to a local vision-language
 model. Everything runs on one 12GB GPU.
 
-The question this was built to answer is not "how high can accuracy go" but:
 
-> Does retrieval-augmented VQA beat uniform frame sampling, and on which kinds
-> of question?
-
-That is why a uniform-sampling baseline is a mandatory config and every result is
-reported per difficulty level with a paired significance test.
 
 ## Result
 
 On the held-out test split of 600 questions, retrieval is **directionally
 positive but not statistically significant**:
 
-| Config | Accuracy | Non-Lin | L1 | L2 | L3 | Δ vs baseline | p |
-|---|---|---|---|---|---|---|---|
-| `baseline-uniform` | 0.208 | 0.094 | 0.314 | 0.124 | 0.196 | — | — |
-| `visual-only` | 0.215 | 0.099 | 0.314 | 0.124 | 0.211 | +0.007 | 0.689 |
-| `+asr-gt` | 0.218 | 0.100 | 0.314 | 0.143 | 0.207 | +0.010 | 0.504 |
-| `+ocr` | **0.227** | **0.101** | 0.314 | 0.143 | 0.225 | +0.018 | 0.193 |
-| `full` | 0.223 | 0.099 | 0.296 | **0.174** | 0.211 | +0.015 | 0.281 |
+| Config | Accuracy | Non-Lin | L1 | L2 | L3 | Δ vs baseline ||
+|---|---|---|---|---|---|---|-
+| `baseline-uniform` | 0.208 | 0.094 | 0.314 | 0.124 | 0.196 | — |
+| `visual-only` | 0.215 | 0.099 | 0.314 | 0.124 | 0.211 | +0.007 |
+| `+asr-gt` | 0.218 | 0.100 | 0.314 | 0.143 | 0.207 | +0.010 |
+| `+ocr` | **0.227** | **0.101** | 0.314 | 0.143 | 0.225 | +0.018 |
+| `full` | 0.223 | 0.099 | 0.296 | **0.174** | 0.211 | +0.015 |
 
 Random guessing scores 0.128 (most questions have eight options).
 `unparsed_rate` is 0.000 for all ten runs, so every figure is a real measurement
@@ -99,6 +93,65 @@ cd online/frontend && npm start       # :3000
 Run every command from the repo root via `python -m`; launching a module by path
 breaks the `core.*` imports.
 
+## Models to download
+
+About **16 GB** of weights. Nothing here is trained — every model is used
+zero-shot, so these are the only artifacts needed to reproduce the results.
+
+| Model | Repo | Size | Points at | Used for |
+|---|---|---|---|---|
+| SigLIP2 so400m | `google/siglip2-so400m-patch14-384` | 4.3 GB | `SIGLIP_MODEL` | visual embedding, 1152-d |
+| jina-clip-v2 | `jinaai/jina-clip-v2` | 1.7 GB | `JINA_MODEL` | visual embedding, 1024-d |
+| faster-whisper large-v3 | `Systran/faster-whisper-large-v3` | 2.9 GB | `WHISPER_MODEL` | speech recognition |
+| Qwen2.5-VL-3B | `Qwen/Qwen2.5-VL-3B-Instruct` | 7.1 GB | `QWEN_VL_MODEL` | answering |
+| TransNetV2 | not on the Hub — see below | 30 MB | `TRANSNET_WEIGHTS` | shot boundaries |
+
+```bash
+export HF_HOME=/path/to/model/cache
+export HF_HUB_DISABLE_XET=1          # see the note below
+
+hf download google/siglip2-so400m-patch14-384
+hf download jinaai/jina-clip-v2
+hf download jinaai/xlm-roberta-flash-implementation   # jina-clip-v2's remote code
+hf download Systran/faster-whisper-large-v3
+hf download Qwen/Qwen2.5-VL-3B-Instruct
+```
+
+**TransNetV2** has no Hugging Face repo. Take
+`transnetv2-pytorch-weights.pth` from the
+[TransNetV2 release](https://github.com/soCzech/TransNetV2) and set
+`TRANSNET_WEIGHTS` to it.
+
+Each of `SIGLIP_MODEL`, `JINA_MODEL`, `QWEN_VL_MODEL` and `WHISPER_MODEL`
+accepts either a Hub id or a local directory, so an existing copy can be reused
+without re-downloading.
+
+Three things worth knowing before the download:
+
+- **`HF_HUB_DISABLE_XET=1` may be required.** On some networks `hf_xet` hangs
+  indefinitely with no output. If a download sits at zero bytes, set this.
+  `scripts/fetch_model_curl.sh <repo> <dir>` is a curl-based fallback that
+  resumes; it exists because `hf download` cannot recover once its client has
+  timed out — every later file then fails with "Cannot send a request, as the
+  client has been closed".
+- **Whisper is the CTranslate2 build**, `Systran/faster-whisper-large-v3`, not
+  `openai/whisper-large-v3`. It is roughly 40× realtime at int8 and decodes
+  audio through PyAV, so no librosa is needed.
+- **jina-clip-v2 needs `trust_remote_code=True`** and pulls a second repo for
+  its model code. Its licence is CC-BY-NC-4.0.
+
+Two models are called over an API and need no download, only keys in `.env`:
+`gemini-2.5-flash` for OCR (`OCR_MODEL`) and `deepseek-chat` for query
+expansion (`DEEPSEEK_MODEL`).
+
+### GPU memory
+
+Peak is **8.2 GB of 12.5 GB** during evaluation. Qwen2.5-VL-3B sits on the GPU
+at 7.5 GB while the two embedders run on CPU — they only encode one short query
+string per question, and keeping all three on the card leaves 0.2 GB of headroom
+after an 18-image prefill. `EMBED_DEVICE=cpu` selects this; the offline embedding
+stage unsets it so both embedders use the GPU, where they need 4 GB.
+
 ## Evaluation
 
 ```bash
@@ -120,28 +173,5 @@ questions would leak evidence between the two sets.
 | `+ocr` | plus Gemini OCR |
 | `full` | plus DeepSeek query expansion |
 
-## Tests
 
-```bash
-python -m unittest discover -s tests -v
-```
 
-158 tests, no GPU or network needed. The integration tests skip themselves unless
-the backend is running.
-
-## What this reuses
-
-17 modules are copied from a prior AIC 2025 codebase — the SigLIP2 and
-jina-clip-v2 wrappers, `QdrantService`, `ElasticsearchService`,
-`rrf_weighted_fuse`, Whisper+VAD, the Gemini OCR key rotation, and the TransNetV2
-network. They carry fixes that were expensive to learn, such as SigLIP2 needing
-lowercase text padded to exactly 64 tokens.
-
-`routes.py`, `resources.py`, `schemas.py`, the Express server, the Video-MME-v2
-loader, the stage orchestrator, shot detection over PyAV, the retrieval layer,
-Qwen answering and the eval harness are written for this project.
-
-See [`docs/ENVIRONMENT.md`](docs/ENVIRONMENT.md) for the environment constraints
-and the failure modes already diagnosed — the exFAT/ext4 split, the unreachable package registries and
-the substitutions they forced, and an Elasticsearch disk-watermark deadlock that
-silently dropped 30,251 documents.

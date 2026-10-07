@@ -55,7 +55,20 @@ class FastWhisper:
         language: str = "en",
         beam_size: int = 5,
     ):
-        self.model_path = model_path or _local_snapshot() or DEFAULT_REPO
+        # WHISPER_MODEL takes a Hub id or a local directory. A bare size such as
+        # "large-v3" is not a repo, so it is mapped onto the CTranslate2 build;
+        # faster-whisper cannot load openai/whisper-large-v3.
+        env = (os.getenv("WHISPER_MODEL") or "").strip()
+        if env and "/" not in env and not Path(env).exists():
+            env = f"Systran/faster-whisper-{env}"
+        # Prefer a complete local snapshot of whatever was asked for, so a bare
+        # size or a Hub id still resolves offline when the weights are cached.
+        self.model_path = (
+            model_path
+            or _local_snapshot(env or DEFAULT_REPO)
+            or env
+            or DEFAULT_REPO
+        )
         self.device = device
         # int8_float16 keeps Whisper near 1.5GB so it can share the card, and
         # keeps a margin for the embedders if a run overlaps.

@@ -1,0 +1,42 @@
+------------------------------- OFFLINE (trước cuộc thi) -------------------------------+
+
+video.mp4  ──► PyAV  ──► TransNetV2 tách shot  ──► keyframe + pHash dedup
+                                      │
+                                      ├──► SigLIP2 (1152-d) + jina-clip-v2 (1024-d)
+                                      │                                      │
+                                      │                                      └──► Qdrant
+                                      │                                           (visual vectors)
+                                      │
+audio      ──► Ground-truth subtitle / Whisper large-v3 + VAD
+                                      │
+                                      └──► Elasticsearch (asr_data / asr_data_whisper)
+
+keyframe   ──► Gemini 2.5 Flash OCR  ──► Elasticsearch (ocr_data)
+
+video + stages  ──► SQLite manifest (resumable preprocessing)
+
+
+-------------------------------- ONLINE (khi thi) --------------------------------
+
+Trình duyệt ──► Express Node.js :3000 ──► FastAPI :8000
+                                             │
+                                             ├──► Qdrant :6333
+                                             │     (SigLIP2 + jina visual retrieval)
+                                             │
+                                             ├──► Elasticsearch :9200
+                                             │     (ASR + OCR retrieval)
+                                             │
+Question + options ──► query expansion (optional DeepSeek)
+                           │
+                           └──► per-source shot deduplication
+                                      ──► weighted RRF
+                                      ──► shot aggregation
+                                      ──► temporal windows
+                                           (before / during / after)
+                                      ──► global frames + transcript digest
+                                      ──► evidence prompt (≤ 20 images)
+                                      ──► Qwen2.5-VL-3B
+                                      ──► Answer label A–H
+
+                                             └──► DRES server (nộp đáp án)
+

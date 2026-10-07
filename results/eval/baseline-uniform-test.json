@@ -1,0 +1,6038 @@
+{
+  "summary": {
+    "n": 600,
+    "accuracy": 0.20833333333333334,
+    "unparsed_rate": 0.0,
+    "by_level": {
+      "1": 0.31446540880503143,
+      "2": 0.12422360248447205,
+      "3": 0.19642857142857142
+    },
+    "by_second_head": {
+      "Action & Motion": 0.1111111111111111,
+      "Change": 0.18181818181818182,
+      "Complex Plot Comprehension": 0.2545454545454545,
+      "Frame-Only": 0.3258426966292135,
+      "Frames & Audio": 0.3,
+      "Order": 0.11538461538461539,
+      "Physical World Reasoning": 0.19117647058823528,
+      "Social Behavior Analysis": 0.1891891891891892,
+      "Temporal Reasoning": 0.0967741935483871,
+      "Video-Based Knowledge Acquisition": 0.1686746987951807
+    },
+    "group_score": 0.09416666666666666,
+    "n_groups": 150,
+    "config": "baseline-uniform",
+    "split": "test",
+    "top_k": 10,
+    "weights": {
+      "siglip": 0.0,
+      "jina": 0.0,
+      "asr": 0.0,
+      "ocr": 0.0
+    },
+    "retrieval": false
+  },
+  "details": [
+    {
+      "question_id": "051-1",
+      "video_id": "051",
+      "gold": "F",
+      "pred": "F",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "051-2",
+      "video_id": "051",
+      "gold": "H",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "051-3",
+      "video_id": "051",
+      "gold": "D",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "051-4",
+      "video_id": "051",
+      "gold": "B",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "052-1",
+      "video_id": "052",
+      "gold": "G",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "052-2",
+      "video_id": "052",
+      "gold": "H",
+      "pred": "G",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "052-3",
+      "video_id": "052",
+      "gold": "H",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "052-4",
+      "video_id": "052",
+      "gold": "A",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "053-1",
+      "video_id": "053",
+      "gold": "G",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "053-2",
+      "video_id": "053",
+      "gold": "A",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "053-3",
+      "video_id": "053",
+      "gold": "D",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "053-4",
+      "video_id": "053",
+      "gold": "A",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "054-1",
+      "video_id": "054",
+      "gold": "H",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "054-2",
+      "video_id": "054",
+      "gold": "B",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "054-3",
+      "video_id": "054",
+      "gold": "H",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "054-4",
+      "video_id": "054",
+      "gold": "D",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "055-1",
+      "video_id": "055",
+      "gold": "G",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "055-2",
+      "video_id": "055",
+      "gold": "C",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "055-3",
+      "video_id": "055",
+      "gold": "H",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "055-4",
+      "video_id": "055",
+      "gold": "F",
+      "pred": "F",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "056-1",
+      "video_id": "056",
+      "gold": "B",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "056-2",
+      "video_id": "056",
+      "gold": "B",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "056-3",
+      "video_id": "056",
+      "gold": "E",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "056-4",
+      "video_id": "056",
+      "gold": "F",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "057-1",
+      "video_id": "057",
+      "gold": "E",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "057-2",
+      "video_id": "057",
+      "gold": "A",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "057-3",
+      "video_id": "057",
+      "gold": "E",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "057-4",
+      "video_id": "057",
+      "gold": "F",
+      "pred": "F",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "058-1",
+      "video_id": "058",
+      "gold": "G",
+      "pred": "G",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "058-2",
+      "video_id": "058",
+      "gold": "D",
+      "pred": "C",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "058-3",
+      "video_id": "058",
+      "gold": "C",
+      "pred": "G",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "058-4",
+      "video_id": "058",
+      "gold": "E",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "059-1",
+      "video_id": "059",
+      "gold": "A",
+      "pred": "C",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "059-2",
+      "video_id": "059",
+      "gold": "D",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "059-3",
+      "video_id": "059",
+      "gold": "F",
+      "pred": "F",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "059-4",
+      "video_id": "059",
+      "gold": "F",
+      "pred": "C",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "060-1",
+      "video_id": "060",
+      "gold": "E",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "060-2",
+      "video_id": "060",
+      "gold": "D",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "060-3",
+      "video_id": "060",
+      "gold": "G",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "060-4",
+      "video_id": "060",
+      "gold": "C",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "061-1",
+      "video_id": "061",
+      "gold": "D",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "061-2",
+      "video_id": "061",
+      "gold": "C",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "061-3",
+      "video_id": "061",
+      "gold": "G",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "061-4",
+      "video_id": "061",
+      "gold": "B",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "062-1",
+      "video_id": "062",
+      "gold": "A",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "062-2",
+      "video_id": "062",
+      "gold": "B",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "062-3",
+      "video_id": "062",
+      "gold": "D",
+      "pred": "G",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "062-4",
+      "video_id": "062",
+      "gold": "G",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "063-1",
+      "video_id": "063",
+      "gold": "G",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "063-2",
+      "video_id": "063",
+      "gold": "H",
+      "pred": "D",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "063-3",
+      "video_id": "063",
+      "gold": "F",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "063-4",
+      "video_id": "063",
+      "gold": "F",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "064-1",
+      "video_id": "064",
+      "gold": "E",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "064-2",
+      "video_id": "064",
+      "gold": "C",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "064-3",
+      "video_id": "064",
+      "gold": "F",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "064-4",
+      "video_id": "064",
+      "gold": "G",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "065-1",
+      "video_id": "065",
+      "gold": "E",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "065-2",
+      "video_id": "065",
+      "gold": "E",
+      "pred": "G",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "065-3",
+      "video_id": "065",
+      "gold": "E",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "065-4",
+      "video_id": "065",
+      "gold": "H",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "066-1",
+      "video_id": "066",
+      "gold": "F",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "066-2",
+      "video_id": "066",
+      "gold": "C",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "066-3",
+      "video_id": "066",
+      "gold": "H",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "066-4",
+      "video_id": "066",
+      "gold": "B",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "067-1",
+      "video_id": "067",
+      "gold": "E",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "067-2",
+      "video_id": "067",
+      "gold": "B",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "067-3",
+      "video_id": "067",
+      "gold": "C",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "067-4",
+      "video_id": "067",
+      "gold": "B",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "068-1",
+      "video_id": "068",
+      "gold": "A",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "068-2",
+      "video_id": "068",
+      "gold": "C",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "068-3",
+      "video_id": "068",
+      "gold": "E",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "068-4",
+      "video_id": "068",
+      "gold": "D",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "069-1",
+      "video_id": "069",
+      "gold": "H",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "069-2",
+      "video_id": "069",
+      "gold": "H",
+      "pred": "G",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "069-3",
+      "video_id": "069",
+      "gold": "A",
+      "pred": "G",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "069-4",
+      "video_id": "069",
+      "gold": "F",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "070-1",
+      "video_id": "070",
+      "gold": "A",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "070-2",
+      "video_id": "070",
+      "gold": "F",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "070-3",
+      "video_id": "070",
+      "gold": "G",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "070-4",
+      "video_id": "070",
+      "gold": "B",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "071-1",
+      "video_id": "071",
+      "gold": "C",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "071-2",
+      "video_id": "071",
+      "gold": "D",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "071-3",
+      "video_id": "071",
+      "gold": "B",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "071-4",
+      "video_id": "071",
+      "gold": "E",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "072-1",
+      "video_id": "072",
+      "gold": "C",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "072-2",
+      "video_id": "072",
+      "gold": "H",
+      "pred": "F",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "072-3",
+      "video_id": "072",
+      "gold": "A",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "072-4",
+      "video_id": "072",
+      "gold": "C",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "073-1",
+      "video_id": "073",
+      "gold": "C",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "073-2",
+      "video_id": "073",
+      "gold": "H",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "073-3",
+      "video_id": "073",
+      "gold": "D",
+      "pred": "G",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "073-4",
+      "video_id": "073",
+      "gold": "B",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "074-1",
+      "video_id": "074",
+      "gold": "H",
+      "pred": "G",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "074-2",
+      "video_id": "074",
+      "gold": "A",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "074-3",
+      "video_id": "074",
+      "gold": "D",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "074-4",
+      "video_id": "074",
+      "gold": "G",
+      "pred": "G",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "075-1",
+      "video_id": "075",
+      "gold": "H",
+      "pred": "C",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "075-2",
+      "video_id": "075",
+      "gold": "C",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "075-3",
+      "video_id": "075",
+      "gold": "D",
+      "pred": "C",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "075-4",
+      "video_id": "075",
+      "gold": "C",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "076-1",
+      "video_id": "076",
+      "gold": "B",
+      "pred": "D",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "076-2",
+      "video_id": "076",
+      "gold": "A",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "076-3",
+      "video_id": "076",
+      "gold": "H",
+      "pred": "H",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "076-4",
+      "video_id": "076",
+      "gold": "B",
+      "pred": "G",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "077-1",
+      "video_id": "077",
+      "gold": "G",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "077-2",
+      "video_id": "077",
+      "gold": "B",
+      "pred": "G",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "077-3",
+      "video_id": "077",
+      "gold": "H",
+      "pred": "H",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "077-4",
+      "video_id": "077",
+      "gold": "A",
+      "pred": "H",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "078-1",
+      "video_id": "078",
+      "gold": "A",
+      "pred": "F",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "078-2",
+      "video_id": "078",
+      "gold": "F",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "078-3",
+      "video_id": "078",
+      "gold": "E",
+      "pred": "H",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "078-4",
+      "video_id": "078",
+      "gold": "H",
+      "pred": "D",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "079-1",
+      "video_id": "079",
+      "gold": "H",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "079-2",
+      "video_id": "079",
+      "gold": "A",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "079-3",
+      "video_id": "079",
+      "gold": "H",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "079-4",
+      "video_id": "079",
+      "gold": "A",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "080-1",
+      "video_id": "080",
+      "gold": "C",
+      "pred": "F",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "080-2",
+      "video_id": "080",
+      "gold": "B",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "080-3",
+      "video_id": "080",
+      "gold": "B",
+      "pred": "F",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "080-4",
+      "video_id": "080",
+      "gold": "C",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "081-1",
+      "video_id": "081",
+      "gold": "C",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "081-2",
+      "video_id": "081",
+      "gold": "C",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "081-3",
+      "video_id": "081",
+      "gold": "G",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "081-4",
+      "video_id": "081",
+      "gold": "H",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "082-1",
+      "video_id": "082",
+      "gold": "H",
+      "pred": "H",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "082-2",
+      "video_id": "082",
+      "gold": "E",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "082-3",
+      "video_id": "082",
+      "gold": "H",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "082-4",
+      "video_id": "082",
+      "gold": "E",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "083-1",
+      "video_id": "083",
+      "gold": "C",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "083-2",
+      "video_id": "083",
+      "gold": "B",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "083-3",
+      "video_id": "083",
+      "gold": "B",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "083-4",
+      "video_id": "083",
+      "gold": "H",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "084-1",
+      "video_id": "084",
+      "gold": "A",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "084-2",
+      "video_id": "084",
+      "gold": "E",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "084-3",
+      "video_id": "084",
+      "gold": "F",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "084-4",
+      "video_id": "084",
+      "gold": "D",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "085-1",
+      "video_id": "085",
+      "gold": "G",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "085-2",
+      "video_id": "085",
+      "gold": "D",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "085-3",
+      "video_id": "085",
+      "gold": "B",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "085-4",
+      "video_id": "085",
+      "gold": "A",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "086-1",
+      "video_id": "086",
+      "gold": "D",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "086-2",
+      "video_id": "086",
+      "gold": "G",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "086-3",
+      "video_id": "086",
+      "gold": "C",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "086-4",
+      "video_id": "086",
+      "gold": "G",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "087-1",
+      "video_id": "087",
+      "gold": "A",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "087-2",
+      "video_id": "087",
+      "gold": "F",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "087-3",
+      "video_id": "087",
+      "gold": "H",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "087-4",
+      "video_id": "087",
+      "gold": "H",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "088-1",
+      "video_id": "088",
+      "gold": "C",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "088-2",
+      "video_id": "088",
+      "gold": "A",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "088-3",
+      "video_id": "088",
+      "gold": "F",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "088-4",
+      "video_id": "088",
+      "gold": "B",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "089-1",
+      "video_id": "089",
+      "gold": "H",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "089-2",
+      "video_id": "089",
+      "gold": "B",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "089-3",
+      "video_id": "089",
+      "gold": "E",
+      "pred": "G",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "089-4",
+      "video_id": "089",
+      "gold": "H",
+      "pred": "G",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "090-1",
+      "video_id": "090",
+      "gold": "E",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "090-2",
+      "video_id": "090",
+      "gold": "A",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "090-3",
+      "video_id": "090",
+      "gold": "D",
+      "pred": "D",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "090-4",
+      "video_id": "090",
+      "gold": "A",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "091-1",
+      "video_id": "091",
+      "gold": "A",
+      "pred": "F",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "091-2",
+      "video_id": "091",
+      "gold": "G",
+      "pred": "C",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "091-3",
+      "video_id": "091",
+      "gold": "G",
+      "pred": "F",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "091-4",
+      "video_id": "091",
+      "gold": "A",
+      "pred": "F",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "092-1",
+      "video_id": "092",
+      "gold": "B",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "092-2",
+      "video_id": "092",
+      "gold": "B",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "092-3",
+      "video_id": "092",
+      "gold": "E",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "092-4",
+      "video_id": "092",
+      "gold": "G",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "093-1",
+      "video_id": "093",
+      "gold": "C",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "093-2",
+      "video_id": "093",
+      "gold": "F",
+      "pred": "F",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "093-3",
+      "video_id": "093",
+      "gold": "A",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "093-4",
+      "video_id": "093",
+      "gold": "B",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "094-1",
+      "video_id": "094",
+      "gold": "A",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "094-2",
+      "video_id": "094",
+      "gold": "H",
+      "pred": "F",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "094-3",
+      "video_id": "094",
+      "gold": "B",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "094-4",
+      "video_id": "094",
+      "gold": "A",
+      "pred": "F",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "095-1",
+      "video_id": "095",
+      "gold": "C",
+      "pred": "G",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "095-2",
+      "video_id": "095",
+      "gold": "E",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "095-3",
+      "video_id": "095",
+      "gold": "H",
+      "pred": "F",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "095-4",
+      "video_id": "095",
+      "gold": "H",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "096-1",
+      "video_id": "096",
+      "gold": "G",
+      "pred": "F",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "096-2",
+      "video_id": "096",
+      "gold": "E",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "096-3",
+      "video_id": "096",
+      "gold": "C",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "096-4",
+      "video_id": "096",
+      "gold": "A",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "097-1",
+      "video_id": "097",
+      "gold": "G",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "097-2",
+      "video_id": "097",
+      "gold": "E",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "097-3",
+      "video_id": "097",
+      "gold": "D",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "097-4",
+      "video_id": "097",
+      "gold": "G",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "098-1",
+      "video_id": "098",
+      "gold": "H",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "098-2",
+      "video_id": "098",
+      "gold": "D",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "098-3",
+      "video_id": "098",
+      "gold": "H",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "098-4",
+      "video_id": "098",
+      "gold": "A",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "099-1",
+      "video_id": "099",
+      "gold": "D",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "099-2",
+      "video_id": "099",
+      "gold": "H",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "099-3",
+      "video_id": "099",
+      "gold": "G",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "099-4",
+      "video_id": "099",
+      "gold": "A",
+      "pred": "G",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "100-1",
+      "video_id": "100",
+      "gold": "B",
+      "pred": "G",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "100-2",
+      "video_id": "100",
+      "gold": "A",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "100-3",
+      "video_id": "100",
+      "gold": "F",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "100-4",
+      "video_id": "100",
+      "gold": "E",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "101-1",
+      "video_id": "101",
+      "gold": "C",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "101-2",
+      "video_id": "101",
+      "gold": "E",
+      "pred": "F",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "101-3",
+      "video_id": "101",
+      "gold": "E",
+      "pred": "C",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "101-4",
+      "video_id": "101",
+      "gold": "A",
+      "pred": "D",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "102-1",
+      "video_id": "102",
+      "gold": "G",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "102-2",
+      "video_id": "102",
+      "gold": "F",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "102-3",
+      "video_id": "102",
+      "gold": "F",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "102-4",
+      "video_id": "102",
+      "gold": "A",
+      "pred": "D",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "103-1",
+      "video_id": "103",
+      "gold": "A",
+      "pred": "G",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "103-2",
+      "video_id": "103",
+      "gold": "A",
+      "pred": "G",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "103-3",
+      "video_id": "103",
+      "gold": "A",
+      "pred": "C",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "103-4",
+      "video_id": "103",
+      "gold": "G",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "104-1",
+      "video_id": "104",
+      "gold": "B",
+      "pred": "C",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "104-2",
+      "video_id": "104",
+      "gold": "C",
+      "pred": "H",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "104-3",
+      "video_id": "104",
+      "gold": "D",
+      "pred": "G",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "104-4",
+      "video_id": "104",
+      "gold": "D",
+      "pred": "F",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "105-1",
+      "video_id": "105",
+      "gold": "B",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "105-2",
+      "video_id": "105",
+      "gold": "D",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "105-3",
+      "video_id": "105",
+      "gold": "A",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "105-4",
+      "video_id": "105",
+      "gold": "B",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "106-1",
+      "video_id": "106",
+      "gold": "G",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "106-2",
+      "video_id": "106",
+      "gold": "A",
+      "pred": "C",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "106-3",
+      "video_id": "106",
+      "gold": "F",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "106-4",
+      "video_id": "106",
+      "gold": "G",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "107-1",
+      "video_id": "107",
+      "gold": "B",
+      "pred": "D",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "107-2",
+      "video_id": "107",
+      "gold": "B",
+      "pred": "F",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "107-3",
+      "video_id": "107",
+      "gold": "C",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "107-4",
+      "video_id": "107",
+      "gold": "D",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "108-1",
+      "video_id": "108",
+      "gold": "E",
+      "pred": "H",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "108-2",
+      "video_id": "108",
+      "gold": "D",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "108-3",
+      "video_id": "108",
+      "gold": "B",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "108-4",
+      "video_id": "108",
+      "gold": "A",
+      "pred": "C",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "109-1",
+      "video_id": "109",
+      "gold": "D",
+      "pred": "G",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "109-2",
+      "video_id": "109",
+      "gold": "B",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "109-3",
+      "video_id": "109",
+      "gold": "B",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "109-4",
+      "video_id": "109",
+      "gold": "B",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "110-1",
+      "video_id": "110",
+      "gold": "G",
+      "pred": "D",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "110-2",
+      "video_id": "110",
+      "gold": "B",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "110-3",
+      "video_id": "110",
+      "gold": "F",
+      "pred": "C",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "110-4",
+      "video_id": "110",
+      "gold": "A",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "111-1",
+      "video_id": "111",
+      "gold": "F",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "111-2",
+      "video_id": "111",
+      "gold": "D",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "111-3",
+      "video_id": "111",
+      "gold": "F",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "111-4",
+      "video_id": "111",
+      "gold": "F",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "112-1",
+      "video_id": "112",
+      "gold": "C",
+      "pred": "D",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "112-2",
+      "video_id": "112",
+      "gold": "A",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "112-3",
+      "video_id": "112",
+      "gold": "D",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "112-4",
+      "video_id": "112",
+      "gold": "H",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "113-1",
+      "video_id": "113",
+      "gold": "C",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "113-2",
+      "video_id": "113",
+      "gold": "E",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "113-3",
+      "video_id": "113",
+      "gold": "D",
+      "pred": "D",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "113-4",
+      "video_id": "113",
+      "gold": "D",
+      "pred": "D",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "114-1",
+      "video_id": "114",
+      "gold": "C",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "114-2",
+      "video_id": "114",
+      "gold": "B",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "114-3",
+      "video_id": "114",
+      "gold": "E",
+      "pred": "H",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "114-4",
+      "video_id": "114",
+      "gold": "H",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "115-1",
+      "video_id": "115",
+      "gold": "C",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C."
+    },
+    {
+      "question_id": "115-2",
+      "video_id": "115",
+      "gold": "E",
+      "pred": "D",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "115-3",
+      "video_id": "115",
+      "gold": "D",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "115-4",
+      "video_id": "115",
+      "gold": "E",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "116-1",
+      "video_id": "116",
+      "gold": "G",
+      "pred": "F",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "116-2",
+      "video_id": "116",
+      "gold": "H",
+      "pred": "D",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "116-3",
+      "video_id": "116",
+      "gold": "G",
+      "pred": "H",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "116-4",
+      "video_id": "116",
+      "gold": "B",
+      "pred": "H",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "117-1",
+      "video_id": "117",
+      "gold": "G",
+      "pred": "D",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "117-2",
+      "video_id": "117",
+      "gold": "A",
+      "pred": "H",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "117-3",
+      "video_id": "117",
+      "gold": "G",
+      "pred": "G",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "117-4",
+      "video_id": "117",
+      "gold": "B",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "118-1",
+      "video_id": "118",
+      "gold": "B",
+      "pred": "H",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "118-2",
+      "video_id": "118",
+      "gold": "A",
+      "pred": "D",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "118-3",
+      "video_id": "118",
+      "gold": "F",
+      "pred": "F",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "118-4",
+      "video_id": "118",
+      "gold": "D",
+      "pred": "H",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "119-1",
+      "video_id": "119",
+      "gold": "B",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "119-2",
+      "video_id": "119",
+      "gold": "F",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "119-3",
+      "video_id": "119",
+      "gold": "G",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "119-4",
+      "video_id": "119",
+      "gold": "E",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "120-1",
+      "video_id": "120",
+      "gold": "G",
+      "pred": "G",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "120-2",
+      "video_id": "120",
+      "gold": "E",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "120-3",
+      "video_id": "120",
+      "gold": "G",
+      "pred": "D",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "120-4",
+      "video_id": "120",
+      "gold": "H",
+      "pred": "H",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "121-1",
+      "video_id": "121",
+      "gold": "H",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "121-2",
+      "video_id": "121",
+      "gold": "E",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "121-3",
+      "video_id": "121",
+      "gold": "F",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "121-4",
+      "video_id": "121",
+      "gold": "G",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "122-1",
+      "video_id": "122",
+      "gold": "E",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "122-2",
+      "video_id": "122",
+      "gold": "H",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "122-3",
+      "video_id": "122",
+      "gold": "E",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "122-4",
+      "video_id": "122",
+      "gold": "C",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "123-1",
+      "video_id": "123",
+      "gold": "E",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "123-2",
+      "video_id": "123",
+      "gold": "G",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "123-3",
+      "video_id": "123",
+      "gold": "G",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "123-4",
+      "video_id": "123",
+      "gold": "C",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "124-1",
+      "video_id": "124",
+      "gold": "G",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "124-2",
+      "video_id": "124",
+      "gold": "H",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "124-3",
+      "video_id": "124",
+      "gold": "E",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "124-4",
+      "video_id": "124",
+      "gold": "G",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "125-1",
+      "video_id": "125",
+      "gold": "F",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "125-2",
+      "video_id": "125",
+      "gold": "G",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "125-3",
+      "video_id": "125",
+      "gold": "A",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "125-4",
+      "video_id": "125",
+      "gold": "D",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "126-1",
+      "video_id": "126",
+      "gold": "F",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "126-2",
+      "video_id": "126",
+      "gold": "G",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "126-3",
+      "video_id": "126",
+      "gold": "F",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "126-4",
+      "video_id": "126",
+      "gold": "H",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "127-1",
+      "video_id": "127",
+      "gold": "E",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "127-2",
+      "video_id": "127",
+      "gold": "H",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "127-3",
+      "video_id": "127",
+      "gold": "E",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "127-4",
+      "video_id": "127",
+      "gold": "D",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "128-1",
+      "video_id": "128",
+      "gold": "G",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "128-2",
+      "video_id": "128",
+      "gold": "G",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "128-3",
+      "video_id": "128",
+      "gold": "F",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "128-4",
+      "video_id": "128",
+      "gold": "C",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "129-1",
+      "video_id": "129",
+      "gold": "A",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "129-2",
+      "video_id": "129",
+      "gold": "H",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "129-3",
+      "video_id": "129",
+      "gold": "E",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "129-4",
+      "video_id": "129",
+      "gold": "A",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "130-1",
+      "video_id": "130",
+      "gold": "G",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "130-2",
+      "video_id": "130",
+      "gold": "H",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "130-3",
+      "video_id": "130",
+      "gold": "G",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "130-4",
+      "video_id": "130",
+      "gold": "C",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "131-1",
+      "video_id": "131",
+      "gold": "D",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "131-2",
+      "video_id": "131",
+      "gold": "C",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "131-3",
+      "video_id": "131",
+      "gold": "H",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "131-4",
+      "video_id": "131",
+      "gold": "H",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "132-1",
+      "video_id": "132",
+      "gold": "G",
+      "pred": "D",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "132-2",
+      "video_id": "132",
+      "gold": "D",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "132-3",
+      "video_id": "132",
+      "gold": "A",
+      "pred": "G",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "132-4",
+      "video_id": "132",
+      "gold": "C",
+      "pred": "G",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "133-1",
+      "video_id": "133",
+      "gold": "A",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "133-2",
+      "video_id": "133",
+      "gold": "E",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "133-3",
+      "video_id": "133",
+      "gold": "B",
+      "pred": "H",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "133-4",
+      "video_id": "133",
+      "gold": "E",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "134-1",
+      "video_id": "134",
+      "gold": "F",
+      "pred": "F",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "134-2",
+      "video_id": "134",
+      "gold": "E",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "134-3",
+      "video_id": "134",
+      "gold": "H",
+      "pred": "G",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "134-4",
+      "video_id": "134",
+      "gold": "C",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "135-1",
+      "video_id": "135",
+      "gold": "E",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "135-2",
+      "video_id": "135",
+      "gold": "F",
+      "pred": "G",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "135-3",
+      "video_id": "135",
+      "gold": "F",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "135-4",
+      "video_id": "135",
+      "gold": "H",
+      "pred": "G",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "136-1",
+      "video_id": "136",
+      "gold": "A",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "136-2",
+      "video_id": "136",
+      "gold": "E",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "136-3",
+      "video_id": "136",
+      "gold": "G",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "136-4",
+      "video_id": "136",
+      "gold": "F",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "137-1",
+      "video_id": "137",
+      "gold": "F",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "137-2",
+      "video_id": "137",
+      "gold": "G",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "137-3",
+      "video_id": "137",
+      "gold": "D",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "137-4",
+      "video_id": "137",
+      "gold": "D",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "138-1",
+      "video_id": "138",
+      "gold": "B",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "138-2",
+      "video_id": "138",
+      "gold": "H",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "138-3",
+      "video_id": "138",
+      "gold": "E",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "138-4",
+      "video_id": "138",
+      "gold": "G",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "139-1",
+      "video_id": "139",
+      "gold": "G",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "139-2",
+      "video_id": "139",
+      "gold": "E",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "139-3",
+      "video_id": "139",
+      "gold": "C",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "139-4",
+      "video_id": "139",
+      "gold": "D",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "140-1",
+      "video_id": "140",
+      "gold": "A",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "140-2",
+      "video_id": "140",
+      "gold": "D",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "140-3",
+      "video_id": "140",
+      "gold": "C",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "140-4",
+      "video_id": "140",
+      "gold": "E",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "141-1",
+      "video_id": "141",
+      "gold": "H",
+      "pred": "G",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "141-2",
+      "video_id": "141",
+      "gold": "A",
+      "pred": "F",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "141-3",
+      "video_id": "141",
+      "gold": "A",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "141-4",
+      "video_id": "141",
+      "gold": "F",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "142-1",
+      "video_id": "142",
+      "gold": "D",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "142-2",
+      "video_id": "142",
+      "gold": "F",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "142-3",
+      "video_id": "142",
+      "gold": "A",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "142-4",
+      "video_id": "142",
+      "gold": "F",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "143-1",
+      "video_id": "143",
+      "gold": "B",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "143-2",
+      "video_id": "143",
+      "gold": "E",
+      "pred": "C",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "143-3",
+      "video_id": "143",
+      "gold": "H",
+      "pred": "H",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "143-4",
+      "video_id": "143",
+      "gold": "D",
+      "pred": "C",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "144-1",
+      "video_id": "144",
+      "gold": "B",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "144-2",
+      "video_id": "144",
+      "gold": "F",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "144-3",
+      "video_id": "144",
+      "gold": "B",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "144-4",
+      "video_id": "144",
+      "gold": "B",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "145-1",
+      "video_id": "145",
+      "gold": "H",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "145-2",
+      "video_id": "145",
+      "gold": "G",
+      "pred": "D",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "145-3",
+      "video_id": "145",
+      "gold": "C",
+      "pred": "H",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "145-4",
+      "video_id": "145",
+      "gold": "E",
+      "pred": "D",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "146-1",
+      "video_id": "146",
+      "gold": "E",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "146-2",
+      "video_id": "146",
+      "gold": "C",
+      "pred": "D",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "146-3",
+      "video_id": "146",
+      "gold": "G",
+      "pred": "G",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "146-4",
+      "video_id": "146",
+      "gold": "F",
+      "pred": "C",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "147-1",
+      "video_id": "147",
+      "gold": "A",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "147-2",
+      "video_id": "147",
+      "gold": "F",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "147-3",
+      "video_id": "147",
+      "gold": "E",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "147-4",
+      "video_id": "147",
+      "gold": "G",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "148-1",
+      "video_id": "148",
+      "gold": "D",
+      "pred": "D",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "148-2",
+      "video_id": "148",
+      "gold": "E",
+      "pred": "D",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "148-3",
+      "video_id": "148",
+      "gold": "B",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "148-4",
+      "video_id": "148",
+      "gold": "A",
+      "pred": "G",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "149-1",
+      "video_id": "149",
+      "gold": "G",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "149-2",
+      "video_id": "149",
+      "gold": "H",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "149-3",
+      "video_id": "149",
+      "gold": "C",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "149-4",
+      "video_id": "149",
+      "gold": "C",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "150-1",
+      "video_id": "150",
+      "gold": "B",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "150-2",
+      "video_id": "150",
+      "gold": "B",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "150-3",
+      "video_id": "150",
+      "gold": "B",
+      "pred": "C",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "150-4",
+      "video_id": "150",
+      "gold": "G",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "151-1",
+      "video_id": "151",
+      "gold": "H",
+      "pred": "D",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "151-2",
+      "video_id": "151",
+      "gold": "E",
+      "pred": "H",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "151-3",
+      "video_id": "151",
+      "gold": "E",
+      "pred": "C",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "151-4",
+      "video_id": "151",
+      "gold": "C",
+      "pred": "H",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "152-1",
+      "video_id": "152",
+      "gold": "G",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "152-2",
+      "video_id": "152",
+      "gold": "A",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "152-3",
+      "video_id": "152",
+      "gold": "F",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "152-4",
+      "video_id": "152",
+      "gold": "F",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "153-1",
+      "video_id": "153",
+      "gold": "G",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "153-2",
+      "video_id": "153",
+      "gold": "D",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "153-3",
+      "video_id": "153",
+      "gold": "H",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "153-4",
+      "video_id": "153",
+      "gold": "F",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "154-1",
+      "video_id": "154",
+      "gold": "B",
+      "pred": "D",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "154-2",
+      "video_id": "154",
+      "gold": "D",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "154-3",
+      "video_id": "154",
+      "gold": "B",
+      "pred": "H",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "154-4",
+      "video_id": "154",
+      "gold": "E",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "155-1",
+      "video_id": "155",
+      "gold": "A",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "155-2",
+      "video_id": "155",
+      "gold": "F",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "155-3",
+      "video_id": "155",
+      "gold": "F",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "155-4",
+      "video_id": "155",
+      "gold": "H",
+      "pred": "F",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "156-1",
+      "video_id": "156",
+      "gold": "A",
+      "pred": "H",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "156-2",
+      "video_id": "156",
+      "gold": "D",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "156-3",
+      "video_id": "156",
+      "gold": "D",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "156-4",
+      "video_id": "156",
+      "gold": "E",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "157-1",
+      "video_id": "157",
+      "gold": "E",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "157-2",
+      "video_id": "157",
+      "gold": "C",
+      "pred": "D",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "157-3",
+      "video_id": "157",
+      "gold": "H",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "157-4",
+      "video_id": "157",
+      "gold": "B",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "158-1",
+      "video_id": "158",
+      "gold": "E",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "158-2",
+      "video_id": "158",
+      "gold": "C",
+      "pred": "D",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "158-3",
+      "video_id": "158",
+      "gold": "G",
+      "pred": "D",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "158-4",
+      "video_id": "158",
+      "gold": "G",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "159-1",
+      "video_id": "159",
+      "gold": "C",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "159-2",
+      "video_id": "159",
+      "gold": "D",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "159-3",
+      "video_id": "159",
+      "gold": "B",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "159-4",
+      "video_id": "159",
+      "gold": "H",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "160-1",
+      "video_id": "160",
+      "gold": "E",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "160-2",
+      "video_id": "160",
+      "gold": "A",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "160-3",
+      "video_id": "160",
+      "gold": "A",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "160-4",
+      "video_id": "160",
+      "gold": "C",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "161-1",
+      "video_id": "161",
+      "gold": "A",
+      "pred": "D",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "161-2",
+      "video_id": "161",
+      "gold": "A",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "161-3",
+      "video_id": "161",
+      "gold": "E",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "161-4",
+      "video_id": "161",
+      "gold": "G",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "162-1",
+      "video_id": "162",
+      "gold": "D",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "162-2",
+      "video_id": "162",
+      "gold": "E",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "162-3",
+      "video_id": "162",
+      "gold": "C",
+      "pred": "D",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "162-4",
+      "video_id": "162",
+      "gold": "H",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "163-1",
+      "video_id": "163",
+      "gold": "H",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "163-2",
+      "video_id": "163",
+      "gold": "B",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "163-3",
+      "video_id": "163",
+      "gold": "D",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "163-4",
+      "video_id": "163",
+      "gold": "C",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "164-1",
+      "video_id": "164",
+      "gold": "H",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "164-2",
+      "video_id": "164",
+      "gold": "H",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "164-3",
+      "video_id": "164",
+      "gold": "C",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "164-4",
+      "video_id": "164",
+      "gold": "C",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "165-1",
+      "video_id": "165",
+      "gold": "A",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "165-2",
+      "video_id": "165",
+      "gold": "B",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "165-3",
+      "video_id": "165",
+      "gold": "B",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "165-4",
+      "video_id": "165",
+      "gold": "H",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "166-1",
+      "video_id": "166",
+      "gold": "G",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "166-2",
+      "video_id": "166",
+      "gold": "D",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "166-3",
+      "video_id": "166",
+      "gold": "H",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "166-4",
+      "video_id": "166",
+      "gold": "D",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "167-1",
+      "video_id": "167",
+      "gold": "H",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "167-2",
+      "video_id": "167",
+      "gold": "H",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "167-3",
+      "video_id": "167",
+      "gold": "A",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "167-4",
+      "video_id": "167",
+      "gold": "H",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "168-1",
+      "video_id": "168",
+      "gold": "H",
+      "pred": "G",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "168-2",
+      "video_id": "168",
+      "gold": "B",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "168-3",
+      "video_id": "168",
+      "gold": "A",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "168-4",
+      "video_id": "168",
+      "gold": "C",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "169-1",
+      "video_id": "169",
+      "gold": "G",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "169-2",
+      "video_id": "169",
+      "gold": "B",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "169-3",
+      "video_id": "169",
+      "gold": "C",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "169-4",
+      "video_id": "169",
+      "gold": "E",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "170-1",
+      "video_id": "170",
+      "gold": "F",
+      "pred": "H",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "170-2",
+      "video_id": "170",
+      "gold": "D",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "170-3",
+      "video_id": "170",
+      "gold": "A",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "170-4",
+      "video_id": "170",
+      "gold": "B",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "171-1",
+      "video_id": "171",
+      "gold": "H",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "171-2",
+      "video_id": "171",
+      "gold": "A",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "171-3",
+      "video_id": "171",
+      "gold": "D",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "171-4",
+      "video_id": "171",
+      "gold": "B",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "172-1",
+      "video_id": "172",
+      "gold": "G",
+      "pred": "G",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "172-2",
+      "video_id": "172",
+      "gold": "H",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "172-3",
+      "video_id": "172",
+      "gold": "C",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "172-4",
+      "video_id": "172",
+      "gold": "D",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "173-1",
+      "video_id": "173",
+      "gold": "C",
+      "pred": "D",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "173-2",
+      "video_id": "173",
+      "gold": "C",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "173-3",
+      "video_id": "173",
+      "gold": "F",
+      "pred": "G",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "173-4",
+      "video_id": "173",
+      "gold": "B",
+      "pred": "F",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "174-1",
+      "video_id": "174",
+      "gold": "H",
+      "pred": "H",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "174-2",
+      "video_id": "174",
+      "gold": "B",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "174-3",
+      "video_id": "174",
+      "gold": "A",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "174-4",
+      "video_id": "174",
+      "gold": "D",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "175-1",
+      "video_id": "175",
+      "gold": "E",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "175-2",
+      "video_id": "175",
+      "gold": "D",
+      "pred": "D",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "175-3",
+      "video_id": "175",
+      "gold": "E",
+      "pred": "F",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "175-4",
+      "video_id": "175",
+      "gold": "C",
+      "pred": "G",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "176-1",
+      "video_id": "176",
+      "gold": "H",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "176-2",
+      "video_id": "176",
+      "gold": "G",
+      "pred": "C",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "176-3",
+      "video_id": "176",
+      "gold": "H",
+      "pred": "F",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "176-4",
+      "video_id": "176",
+      "gold": "B",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "177-1",
+      "video_id": "177",
+      "gold": "C",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "177-2",
+      "video_id": "177",
+      "gold": "E",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "177-3",
+      "video_id": "177",
+      "gold": "G",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "177-4",
+      "video_id": "177",
+      "gold": "D",
+      "pred": "F",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "178-1",
+      "video_id": "178",
+      "gold": "D",
+      "pred": "H",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "178-2",
+      "video_id": "178",
+      "gold": "F",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "178-3",
+      "video_id": "178",
+      "gold": "D",
+      "pred": "D",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "178-4",
+      "video_id": "178",
+      "gold": "E",
+      "pred": "D",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "179-1",
+      "video_id": "179",
+      "gold": "F",
+      "pred": "F",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "179-2",
+      "video_id": "179",
+      "gold": "B",
+      "pred": "D",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "179-3",
+      "video_id": "179",
+      "gold": "A",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "179-4",
+      "video_id": "179",
+      "gold": "A",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "180-1",
+      "video_id": "180",
+      "gold": "A",
+      "pred": "H",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "180-2",
+      "video_id": "180",
+      "gold": "B",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "180-3",
+      "video_id": "180",
+      "gold": "D",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "180-4",
+      "video_id": "180",
+      "gold": "D",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "181-1",
+      "video_id": "181",
+      "gold": "H",
+      "pred": "H",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "H"
+    },
+    {
+      "question_id": "181-2",
+      "video_id": "181",
+      "gold": "G",
+      "pred": "G",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "181-3",
+      "video_id": "181",
+      "gold": "B",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "181-4",
+      "video_id": "181",
+      "gold": "D",
+      "pred": "D",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "182-1",
+      "video_id": "182",
+      "gold": "G",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "182-2",
+      "video_id": "182",
+      "gold": "H",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "182-3",
+      "video_id": "182",
+      "gold": "B",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "182-4",
+      "video_id": "182",
+      "gold": "H",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "183-1",
+      "video_id": "183",
+      "gold": "A",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "183-2",
+      "video_id": "183",
+      "gold": "H",
+      "pred": "F",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "183-3",
+      "video_id": "183",
+      "gold": "F",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "183-4",
+      "video_id": "183",
+      "gold": "A",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "184-1",
+      "video_id": "184",
+      "gold": "F",
+      "pred": "A",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "184-2",
+      "video_id": "184",
+      "gold": "A",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "184-3",
+      "video_id": "184",
+      "gold": "H",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "184-4",
+      "video_id": "184",
+      "gold": "G",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "185-1",
+      "video_id": "185",
+      "gold": "B",
+      "pred": "G",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "185-2",
+      "video_id": "185",
+      "gold": "C",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "185-3",
+      "video_id": "185",
+      "gold": "C",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "185-4",
+      "video_id": "185",
+      "gold": "D",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "186-1",
+      "video_id": "186",
+      "gold": "A",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "186-2",
+      "video_id": "186",
+      "gold": "C",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "186-3",
+      "video_id": "186",
+      "gold": "H",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "186-4",
+      "video_id": "186",
+      "gold": "C",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "187-1",
+      "video_id": "187",
+      "gold": "F",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "187-2",
+      "video_id": "187",
+      "gold": "A",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "187-3",
+      "video_id": "187",
+      "gold": "B",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "187-4",
+      "video_id": "187",
+      "gold": "A",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "188-1",
+      "video_id": "188",
+      "gold": "B",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "188-2",
+      "video_id": "188",
+      "gold": "B",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "188-3",
+      "video_id": "188",
+      "gold": "C",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "188-4",
+      "video_id": "188",
+      "gold": "A",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "189-1",
+      "video_id": "189",
+      "gold": "E",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "189-2",
+      "video_id": "189",
+      "gold": "H",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "189-3",
+      "video_id": "189",
+      "gold": "B",
+      "pred": "C",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "189-4",
+      "video_id": "189",
+      "gold": "G",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "190-1",
+      "video_id": "190",
+      "gold": "A",
+      "pred": "D",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "190-2",
+      "video_id": "190",
+      "gold": "B",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "190-3",
+      "video_id": "190",
+      "gold": "C",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "190-4",
+      "video_id": "190",
+      "gold": "A",
+      "pred": "A",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "191-1",
+      "video_id": "191",
+      "gold": "A",
+      "pred": "D",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "191-2",
+      "video_id": "191",
+      "gold": "D",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "191-3",
+      "video_id": "191",
+      "gold": "E",
+      "pred": "D",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "191-4",
+      "video_id": "191",
+      "gold": "G",
+      "pred": "D",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "192-1",
+      "video_id": "192",
+      "gold": "G",
+      "pred": "F",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "192-2",
+      "video_id": "192",
+      "gold": "B",
+      "pred": "F",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "192-3",
+      "video_id": "192",
+      "gold": "E",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "192-4",
+      "video_id": "192",
+      "gold": "A",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "193-1",
+      "video_id": "193",
+      "gold": "A",
+      "pred": "F",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "193-2",
+      "video_id": "193",
+      "gold": "C",
+      "pred": "D",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "193-3",
+      "video_id": "193",
+      "gold": "B",
+      "pred": "D",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "193-4",
+      "video_id": "193",
+      "gold": "H",
+      "pred": "B",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "194-1",
+      "video_id": "194",
+      "gold": "D",
+      "pred": "D",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "194-2",
+      "video_id": "194",
+      "gold": "F",
+      "pred": "F",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "194-3",
+      "video_id": "194",
+      "gold": "B",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "194-4",
+      "video_id": "194",
+      "gold": "G",
+      "pred": "G",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "195-1",
+      "video_id": "195",
+      "gold": "F",
+      "pred": "G",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "195-2",
+      "video_id": "195",
+      "gold": "C",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "195-3",
+      "video_id": "195",
+      "gold": "H",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "195-4",
+      "video_id": "195",
+      "gold": "D",
+      "pred": "D",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "196-1",
+      "video_id": "196",
+      "gold": "G",
+      "pred": "C",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "C"
+    },
+    {
+      "question_id": "196-2",
+      "video_id": "196",
+      "gold": "E",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "196-3",
+      "video_id": "196",
+      "gold": "H",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "196-4",
+      "video_id": "196",
+      "gold": "E",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "197-1",
+      "video_id": "197",
+      "gold": "D",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "197-2",
+      "video_id": "197",
+      "gold": "A",
+      "pred": "B",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "197-3",
+      "video_id": "197",
+      "gold": "E",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "197-4",
+      "video_id": "197",
+      "gold": "E",
+      "pred": "E",
+      "unparsed": false,
+      "level": "1",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "198-1",
+      "video_id": "198",
+      "gold": "F",
+      "pred": "F",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "198-2",
+      "video_id": "198",
+      "gold": "E",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "198-3",
+      "video_id": "198",
+      "gold": "F",
+      "pred": "F",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "F"
+    },
+    {
+      "question_id": "198-4",
+      "video_id": "198",
+      "gold": "E",
+      "pred": "G",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "G"
+    },
+    {
+      "question_id": "199-1",
+      "video_id": "199",
+      "gold": "A",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "199-2",
+      "video_id": "199",
+      "gold": "E",
+      "pred": "A",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "A"
+    },
+    {
+      "question_id": "199-3",
+      "video_id": "199",
+      "gold": "G",
+      "pred": "D",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "D"
+    },
+    {
+      "question_id": "199-4",
+      "video_id": "199",
+      "gold": "A",
+      "pred": "E",
+      "unparsed": false,
+      "level": "2",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "200-1",
+      "video_id": "200",
+      "gold": "C",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "200-2",
+      "video_id": "200",
+      "gold": "B",
+      "pred": "B",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "B"
+    },
+    {
+      "question_id": "200-3",
+      "video_id": "200",
+      "gold": "E",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    },
+    {
+      "question_id": "200-4",
+      "video_id": "200",
+      "gold": "F",
+      "pred": "E",
+      "unparsed": false,
+      "level": "3",
+      "shot_ids": [],
+      "raw": "E"
+    }
+  ]
+}
