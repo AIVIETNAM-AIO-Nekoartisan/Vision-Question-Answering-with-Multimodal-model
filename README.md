@@ -101,8 +101,7 @@ zero-shot, so these are the only artifacts needed to reproduce the results.
 | Model | Repo | Size | Points at | Used for |
 |---|---|---|---|---|
 | SigLIP2 so400m | `google/siglip2-so400m-patch14-384` | 4.3 GB | `SIGLIP_MODEL` | visual embedding, 1152-d |
-| jina-clip-v2 | `jinaai/jina-clip-v2` | 1.7 GB | `JINA_MODEL` | visual embedding, 1024-d |
-| faster-whisper large-v3 | `Systran/faster-whisper-large-v3` | 2.9 GB | `WHISPER_MODEL` | speech recognition |
+| jina-clip-v2 | `jinaai/jina-clip-v2` | 1.7 GB | `JINA_MODEL` | visual embedding, 1024-d | 
 | Qwen2.5-VL-3B | `Qwen/Qwen2.5-VL-3B-Instruct` | 7.1 GB | `QWEN_VL_MODEL` | answering |
 | TransNetV2 | not on the Hub — see below | 30 MB | `TRANSNET_WEIGHTS` | shot boundaries |
 
@@ -144,13 +143,6 @@ Two models are called over an API and need no download, only keys in `.env`:
 `gemini-2.5-flash` for OCR (`OCR_MODEL`) and `deepseek-chat` for query
 expansion (`DEEPSEEK_MODEL`).
 
-### GPU memory
-
-Peak is **8.2 GB of 12.5 GB** during evaluation. Qwen2.5-VL-3B sits on the GPU
-at 7.5 GB while the two embedders run on CPU — they only encode one short query
-string per question, and keeping all three on the card leaves 0.2 GB of headroom
-after an 18-image prefill. `EMBED_DEVICE=cpu` selects this; the offline embedding
-stage unsets it so both embedders use the GPU, where they need 4 GB.
 
 ## Evaluation
 
